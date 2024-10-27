@@ -10,7 +10,13 @@ function mergeLineValues(line: TileType[]): TileType[] {
     if (deepCopyLine[i].value === deepCopyLine[i - 1].value) {
       deepCopyLine[i - 1].value *= 2;
       deepCopyLine[i - 1].isMerged = true;
-      deepCopyLine[i].value = 0;
+      deepCopyLine[i] = {
+        value: 0,
+        isNew: false,
+        isMerged: false,
+        direction: null,
+      };
+
       i--;
     }
   }
@@ -23,16 +29,15 @@ function mergeLineValues(line: TileType[]): TileType[] {
 }
 
 export function slideLine(line: TileType[], direction: Direction): TileType[] {
+  const originalLine = line.map((tile) => ({ ...tile }));
   const valuesWithoutZero = line.filter((tile) => tile.value !== 0);
 
   if (valuesWithoutZero.length === 0) return line;
 
-  const withDirection = addSlideDirectionToLine(valuesWithoutZero, direction);
-
   if (direction === 'ArrowLeft' || direction === 'ArrowUp')
-    withDirection.reverse();
+    valuesWithoutZero.reverse();
 
-  const mergedLine = mergeLineValues(withDirection);
+  const mergedLine = mergeLineValues(valuesWithoutZero);
 
   const zeros = Array(LINES - mergedLine.length).fill({
     value: 0,
@@ -45,7 +50,13 @@ export function slideLine(line: TileType[], direction: Direction): TileType[] {
 
   if (direction === 'ArrowLeft' || direction === 'ArrowUp') newLine.reverse();
 
-  return newLine;
+  const newLineWithDirection = addSlideDirectionToLine(
+    newLine,
+    originalLine,
+    direction,
+  );
+
+  return newLineWithDirection;
 }
 
 const hasZero = (array: TileType[][]): boolean =>
@@ -97,12 +108,17 @@ export function resetTileStates(board: TileType[][]): TileType[][] {
 
 export function addSlideDirectionToLine(
   line: TileType[],
+  originalLine: TileType[],
   direction: Direction,
 ): TileType[] {
-  return line.map((tile) => ({
-    ...tile,
-    direction: tile.value && !tile.isMerged ? direction : null,
-  }));
+  const deepCopyLine = line.map((tile) => ({ ...tile }));
+
+  return deepCopyLine.map((tile, index) => {
+    if (tile.value && tile.value !== originalLine[index].value) {
+      return { ...tile, direction };
+    }
+    return tile;
+  });
 }
 
 export const transposeArray = <T>(array: T[][]): T[][] => {
