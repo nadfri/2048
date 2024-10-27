@@ -1,5 +1,10 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Direction, transposeArray, slideLine } from '@/utils/utils';
+import {
+  Direction,
+  transposeArray,
+  slideLine,
+  addNewNumberToBoard,
+} from '@/utils/utils';
 import { initialBoard } from '@/utils/init';
 
 export function useBoard() {
@@ -20,7 +25,18 @@ export function useBoard() {
         slideLine(line, direction),
       );
 
-      setBoard(isVerticalMove ? transposeArray(updatedBoard) : updatedBoard);
+      const isBoardChanged =
+        JSON.stringify(orientedBoard) !== JSON.stringify(updatedBoard);
+
+      if (!isBoardChanged) return;
+
+      const boardWithNewNumber = addNewNumberToBoard(updatedBoard);
+
+      setBoard(
+        isVerticalMove
+          ? transposeArray(boardWithNewNumber)
+          : boardWithNewNumber,
+      );
     },
     [board],
   );
