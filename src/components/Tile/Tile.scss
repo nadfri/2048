@@ -1,8 +1,16 @@
 .Tile {
+  display: flex;
   border-radius: 4px;
-  display: grid;
-  place-content: center;
-  overflow: hidden;
-  aspect-ratio: 1 / 1;  
-  font-size: 2rem;
+  aspect-ratio: 1 / 1;
+  background-color: var(--tile-0-color);
+  
+  .value {
+    flex: 1;
+    display: grid;
+    place-content: center;
+    overflow: hidden;
+    
+    font-size: 2rem;
+    border-radius: 4px;
+  }
 }

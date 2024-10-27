@@ -1,14 +1,14 @@
 import './Board.scss';
-import Tile from '../Tile/Tile';
+import Tile, { TileType } from '../Tile/Tile';
 import { LINES } from '@/utils/init';
 
-export default function Board({ board }: { board: number[][] }) {
+export default function Board({ board }: { board: TileType[][] }) {
   const style = { gridTemplateColumns: `repeat(${LINES}, 1fr)` };
 
   return (
     <div className="Board" style={style}>
-      {board.flat().map((value: number, position: number) => (
-        <Tile key={position} value={value} />
+      {board.flat().map((tile, position: number) => (
+        <Tile key={position} tile={tile} />
       ))}
     </div>
   );

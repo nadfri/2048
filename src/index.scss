@@ -57,16 +57,87 @@ li {
 
 @keyframes scale {
   0% {
-    transform: scale(0);
+    scale: 0;
   }
-  50% {
-    transform: scale(1.1);
-  }
+
   100% {
-    transform: scale(1);
+    scale: 1;
   }
 }
 
 .scale {
-  animation: scale 0.3s ease;
+  animation: scale 0.3s 0.2s ease backwards;
+}
+
+@keyframes scaleMerge {
+  0% {
+    scale: 0;
+  }
+
+  50% {
+    scale: 1.1;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+.scale-merge {
+  animation: scaleMerge 0.3s ease forwards;
+}
+
+@keyframes slide-right {
+  0% {
+    transform: translateX(-10px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.slide-ArrowRight {
+  animation: slide-right 1.2s backwards;
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(10px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.slide-ArrowLeft {
+  animation: slide-left 1.2s backwards;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.slide-ArrowUp {
+  animation: slide-up 1.2s backwards;
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.slide-ArrowDown {
+  animation: slide-down 1.2s backwards;
 }

@@ -4,6 +4,7 @@ import {
   transposeArray,
   slideLine,
   addNewNumberToBoard,
+  resetTileStates,
 } from '@/utils/utils';
 import { initialBoard } from '@/utils/init';
 
@@ -14,16 +15,20 @@ export function useBoard() {
 
   const handleMove = useCallback(
     (event: KeyboardEvent) => {
+      const directions = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+
       const direction = event.key as Direction;
+
+      if (!directions.includes(direction)) return;
 
       const isVerticalMove =
         direction === 'ArrowDown' || direction === 'ArrowUp';
 
       const orientedBoard = isVerticalMove ? transposeArray(board) : board;
 
-      const updatedBoard = orientedBoard.map((line) =>
-        slideLine(line, direction),
-      );
+      const resetBoard = resetTileStates(orientedBoard);
+
+      const updatedBoard = resetBoard.map((line) => slideLine(line, direction));
 
       const isBoardChanged =
         JSON.stringify(orientedBoard) !== JSON.stringify(updatedBoard);
