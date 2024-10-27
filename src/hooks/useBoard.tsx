@@ -2,8 +2,10 @@ import { useState, useCallback, useEffect } from 'react';
 import { Direction, transposeArray, slideLine } from '@/utils/utils';
 import { initialBoard } from '@/utils/init';
 
-export default function useBoard() {
+export function useBoard() {
   const [board, setBoard] = useState(initialBoard);
+
+  const reset = () => setBoard(initialBoard);
 
   const handleMove = useCallback(
     (event: KeyboardEvent) => {
@@ -25,8 +27,10 @@ export default function useBoard() {
 
   useEffect(() => {
     window.addEventListener('keydown', handleMove);
+
+    /*CleanUp*/
     return () => window.removeEventListener('keydown', handleMove);
   }, [handleMove]);
 
-  return { board };
+  return { board, reset };
 }

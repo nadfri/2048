@@ -5,7 +5,8 @@ const initialBoard: number[][] = Array.from({ length: LINES }, () =>
 );
 
 initialBoard[0][0] = 2;
-initialBoard[0][2] = 4;
+initialBoard[0][2] = 2;
+initialBoard[0][3] = 4;
 initialBoard[3][1] = 8;
 
 export { initialBoard, LINES };
