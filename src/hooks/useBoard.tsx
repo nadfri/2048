@@ -23,11 +23,18 @@ export function useBoard() {
       const isVerticalMove =
         direction === 'ArrowDown' || direction === 'ArrowUp';
 
-      const orientedBoard = isVerticalMove ? transposeArray(board) : board;
+      /***#1 Reset the tile states***/
+      const newBoard = resetTileStates(board);
 
-      const resetBoard = resetTileStates(orientedBoard);
+      /***#2 Change Orientation for Vertical move**/
+      const orientedBoard = isVerticalMove
+        ? transposeArray(newBoard)
+        : newBoard;
 
-      const updatedBoard = resetBoard.map((line) => slideLine(line, direction));
+      /***#3 Update Board after slide move***/
+      const updatedBoard = orientedBoard.map((line) =>
+        slideLine(line, direction),
+      );
 
       const isBoardChanged = orientedBoard.some((row, i) =>
         row.some((tile, j) => tile.value !== updatedBoard[i][j].value),
@@ -35,6 +42,7 @@ export function useBoard() {
 
       if (!isBoardChanged) return;
 
+      /***#4 Add new number to the board if has changed***/
       const boardWithNewNumber = addNewNumberToBoard(updatedBoard);
 
       setBoard(

@@ -1,7 +1,6 @@
 import './Board.scss';
 import Tile from '../Tile/Tile';
 import { TileType } from '@/types/types';
-
 import { LINES } from '@/utils/init';
 
 export default function Board({ board }: { board: TileType[][] }) {

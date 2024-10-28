@@ -9,13 +9,15 @@ export const directions: Directions[] = [
 ];
 
 export function slideLine(line: TileType[], direction: Directions): TileType[] {
-  const originalLine = line.map((tile) => ({ ...tile }));
   const valuesWithoutZero = line.filter((tile) => tile.value !== 0);
 
   if (valuesWithoutZero.length === 0) return line;
 
-  if (direction === 'ArrowLeft' || direction === 'ArrowUp')
+  let isReversed = false;
+  if (direction === 'ArrowLeft' || direction === 'ArrowUp') {
     valuesWithoutZero.reverse();
+    isReversed = true;
+  }
 
   const mergedLine = mergeLineValues(valuesWithoutZero);
 
@@ -28,17 +30,17 @@ export function slideLine(line: TileType[], direction: Directions): TileType[] {
 
   const newLine = [...zeros, ...mergedLine];
 
-  if (direction === 'ArrowLeft' || direction === 'ArrowUp') newLine.reverse();
+  if (isReversed) newLine.reverse();
 
-  const isLineChanged = originalLine.some(
+  const isLineChanged = line.some(
     (tile, index) => tile.value !== newLine[index].value,
   );
 
-  if (!isLineChanged) return originalLine;
+  if (!isLineChanged) return line;
 
   const newLineWithDirection = addSlideDirectionToLine(
     newLine,
-    originalLine,
+    line,
     direction,
   );
 
@@ -83,7 +85,7 @@ function getZerosIndexes(array: TileType[][]): number[][] {
 }
 
 export function addNewNumberToBoard(board: TileType[][]): TileType[][] {
-  if (!hasZero) return board;
+  if (!hasZero(board)) return board;
 
   const deepCopyBoard = board.map((line) => line.map((tile) => ({ ...tile })));
 
@@ -115,13 +117,11 @@ export function resetTileStates(board: TileType[][]): TileType[][] {
 }
 
 export function addSlideDirectionToLine(
-  line: TileType[],
+  newLine: TileType[],
   originalLine: TileType[],
   direction: Directions,
 ): TileType[] {
-  const deepCopyLine = line.map((tile) => ({ ...tile }));
-
-  return deepCopyLine.map((tile, index) => {
+  return newLine.map((tile, index) => {
     if (tile.value && tile.value !== originalLine[index].value) {
       return { ...tile, direction };
     }
