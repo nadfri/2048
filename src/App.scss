@@ -7,19 +7,27 @@
   align-items: center;
 
   border: solid var(--empty-color);
-  padding: 16px;
+  padding: 10px;
   margin: auto;
 
   h1 {
     text-align: center;
-    font-size: 92px;
-    margin-top: 0;
-    margin-bottom: 16px;
+    font-size: 60px;
+    margin: 0;
   }
 
-  .container-btns {
+  .score {
+    text-align: right;
+    min-width: 100px;
+    padding: 6px 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    background-color: var(--grid-color-50);
+  }
+
+  .container {
     width: 100%;
-    margin-top: 32px;
+    margin: 32px 0;
     display: flex;
     justify-content: flex-end;
     gap: 16px;

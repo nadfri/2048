@@ -13,11 +13,20 @@ export function useBoard() {
   const [board, setBoard] = useState(initialBoard);
   const [prevBoard, setPrevBoard] = useState(initialBoard);
   const [canBack, setCanBack] = useState(false);
+  const [score, setScore] = useState(0);
 
-  const reload = () => setBoard(initialBoard);
+  const reload = () => {
+    setBoard(initialBoard);
+    setScore(0);
+  };
+
   const backPrevBoard = () => {
     setBoard(prevBoard);
     setCanBack(false);
+    setScore(
+      (prev) =>
+        prev - prevBoard.flat().reduce((acc, tile) => acc + tile.value, 0),
+    );
   };
 
   const handleMove = useCallback(
@@ -38,8 +47,8 @@ export function useBoard() {
         : newBoard;
 
       /***#3 Update Board after slide move***/
-      const updatedBoard = orientedBoard.map((line) =>
-        slideLine(line, direction),
+      const updatedBoard = orientedBoard.map(
+        (line) => slideLine(line, direction).newLineWithDirection,
       );
 
       const isBoardChanged = orientedBoard.some((row, i) =>
@@ -47,6 +56,12 @@ export function useBoard() {
       );
 
       if (!isBoardChanged) return;
+
+      /***#4 Update Score***/
+      setScore(
+        (prev) =>
+          prev + updatedBoard.flat().reduce((acc, tile) => acc + tile.value, 0),
+      );
 
       /***#4 Add new number to the board if has changed***/
       const boardWithNewNumber = addNewNumberToBoard(updatedBoard);
@@ -70,5 +85,5 @@ export function useBoard() {
     return () => window.removeEventListener('keydown', handleMove);
   }, [handleMove]);
 
-  return { board, reload, backPrevBoard, canBack };
+  return { board, reload, backPrevBoard, canBack, score };
 }
