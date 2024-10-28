@@ -6,3 +6,9 @@ export type TileType = {
   isMerged: boolean;
   direction: Directions | null;
 };
+
+export type StorageType = {
+  board: TileType[][];
+  score: number;
+  highScore: number;
+} | null;

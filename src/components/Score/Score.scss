@@ -1,0 +1,22 @@
+.Score {
+  width: 100%;
+  margin: 32px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.score {
+  text-align: right;
+  min-width: 100px;
+  padding: 6px 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  background-color: var(--grid-color-50);
+}
+
+.high-score {
+  display: inline-flex;
+  justify-content: space-between;
+  background-color: var(--tile-2-color);
+}

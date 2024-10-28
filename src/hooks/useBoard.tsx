@@ -8,12 +8,16 @@ import {
   directions,
 } from '@/utils/utils';
 import { Directions } from '@/types/types';
+import { getFromStorage, saveInStorage } from '@/utils/storage';
 
 export function useBoard() {
-  const [board, setBoard] = useState(initialBoard);
+  const dataStorage = getFromStorage();
+
+  const [board, setBoard] = useState(dataStorage?.board || initialBoard);
   const [prevBoard, setPrevBoard] = useState(initialBoard);
   const [canBack, setCanBack] = useState(false);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState(dataStorage?.score || 0);
+  const [highScore, setHighScore] = useState(dataStorage?.highScore || 0);
 
   const reload = () => {
     setBoard(initialBoard);
@@ -23,10 +27,14 @@ export function useBoard() {
   const backPrevBoard = () => {
     setBoard(prevBoard);
     setCanBack(false);
-    setScore(
-      (prev) =>
-        prev - prevBoard.flat().reduce((acc, tile) => acc + tile.value, 0),
-    );
+
+    const prevScore = prevBoard
+      .flat()
+      .reduce((acc, tile) => acc + tile.value, 0);
+
+    setScore((prev) => prev - prevScore);
+
+    saveInStorage(prevBoard, score - prevScore, highScore);
   };
 
   const handleMove = useCallback(
@@ -58,10 +66,13 @@ export function useBoard() {
       if (!isBoardChanged) return;
 
       /***#4 Update Score***/
-      setScore(
-        (prev) =>
-          prev + updatedBoard.flat().reduce((acc, tile) => acc + tile.value, 0),
-      );
+      const newScore =
+        score + updatedBoard.flat().reduce((acc, tile) => acc + tile.value, 0);
+
+      setScore(newScore);
+
+      const newHighScore = newScore > highScore ? newScore : highScore;
+      setHighScore(newHighScore);
 
       /***#4 Add new number to the board if has changed***/
       const boardWithNewNumber = addNewNumberToBoard(updatedBoard);
@@ -74,6 +85,7 @@ export function useBoard() {
 
       setPrevBoard(board);
       setCanBack(true);
+      saveInStorage(boardWithNewNumber, newScore, newHighScore);
     },
     [board],
   );
@@ -85,5 +97,5 @@ export function useBoard() {
     return () => window.removeEventListener('keydown', handleMove);
   }, [handleMove]);
 
-  return { board, reload, backPrevBoard, canBack, score };
+  return { board, reload, backPrevBoard, canBack, score, highScore };
 }

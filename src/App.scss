@@ -15,46 +15,4 @@
     font-size: 60px;
     margin: 0;
   }
-
-  .score {
-    text-align: right;
-    min-width: 100px;
-    padding: 6px 8px;
-    font-size: 16px;
-    border-radius: 4px;
-    background-color: var(--grid-color-50);
-  }
-
-  .container {
-    width: 100%;
-    margin: 32px 0;
-    display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-  }
-
-  .btn-back {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-
-    padding: 5px 10px;
-    font-size: 16px;
-
-    color: var(--text-color);
-
-    .arrow {
-      font-size: 2rem;
-    }
-  }
-
-  .btn-reload {
-    display: grid;
-    place-items: center;
-    width: 50px;
-
-    &:active .ReloadIcon {
-      rotate: 180deg;
-    }
-  }
 }
