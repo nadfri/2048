@@ -1,4 +1,4 @@
-import { TileType } from '@/components/Tile/Tile';
+import { TileType } from '@/types/types';
 
 const LINES = 4;
 const PERCENT_OF_2 = 0.7;

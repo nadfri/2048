@@ -1,12 +1,5 @@
-import { Direction } from '@/utils/utils';
+import { TileType } from '@/types/types';
 import './Tile.scss';
-
-export type TileType = {
-  value: number;
-  isNew: boolean;
-  isMerged: boolean;
-  direction: Direction | null;
-};
 
 export default function Tile({ tile }: { tile: TileType }) {
   const backgroundColor = `var(--tile-${tile.value}-color)`;

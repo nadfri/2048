@@ -1,16 +1,14 @@
-import { TileType } from '@/components/Tile/Tile';
 import { LINES, PERCENT_OF_2 } from './init';
+import { Directions, TileType } from '@/types/types';
 
-export type Direction = 'ArrowRight' | 'ArrowLeft' | 'ArrowDown' | 'ArrowUp';
-
-export const directions: Direction[] = [
+export const directions: Directions[] = [
   'ArrowRight',
   'ArrowLeft',
   'ArrowDown',
   'ArrowUp',
 ];
 
-export function slideLine(line: TileType[], direction: Direction): TileType[] {
+export function slideLine(line: TileType[], direction: Directions): TileType[] {
   const originalLine = line.map((tile) => ({ ...tile }));
   const valuesWithoutZero = line.filter((tile) => tile.value !== 0);
 
@@ -119,7 +117,7 @@ export function resetTileStates(board: TileType[][]): TileType[][] {
 export function addSlideDirectionToLine(
   line: TileType[],
   originalLine: TileType[],
-  direction: Direction,
+  direction: Directions,
 ): TileType[] {
   const deepCopyLine = line.map((tile) => ({ ...tile }));
 

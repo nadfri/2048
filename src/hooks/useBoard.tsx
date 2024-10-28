@@ -1,13 +1,13 @@
 import { initialBoard } from '@/utils/init';
 import { useState, useCallback, useEffect } from 'react';
 import {
-  Direction,
   transposeArray,
   slideLine,
   addNewNumberToBoard,
   resetTileStates,
   directions,
 } from '@/utils/utils';
+import { Directions } from '@/types/types';
 
 export function useBoard() {
   const [board, setBoard] = useState(initialBoard);
@@ -16,7 +16,7 @@ export function useBoard() {
 
   const handleMove = useCallback(
     (event: KeyboardEvent) => {
-      const direction = event.key as Direction;
+      const direction = event.key as Directions;
 
       if (!directions.includes(direction)) return;
 
