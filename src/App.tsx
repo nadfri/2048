@@ -1,9 +1,10 @@
 import './App.scss';
 import Board from './components/Board/Board';
+import ReloadIcon from './components/ReloadIcon/ReloadIcon';
 import { useBoard } from './hooks/useBoard';
 
 function App() {
-  const { reset, board, backPrevBoard, canBack } = useBoard();
+  const { reload, board, backPrevBoard, canBack } = useBoard();
 
   return (
     <div className="App">
@@ -11,13 +12,19 @@ function App() {
 
       <Board board={board} />
 
-      <button className="reset" onClick={reset}>
-        RESET
-      </button>
+      <div className="container-btns">
+        <button className="btn-reload" onClick={reload}>
+          <ReloadIcon />
+        </button>
 
-      <button className="reset" onClick={backPrevBoard} disabled={!canBack}>
-        BACK
-      </button>
+        <button
+          className="btn-back"
+          onClick={backPrevBoard}
+          disabled={!canBack}
+        >
+          <span className="arrow">↼</span> <span>BACK</span>
+        </button>
+      </div>
     </div>
   );
 }

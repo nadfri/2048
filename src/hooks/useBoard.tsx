@@ -14,7 +14,7 @@ export function useBoard() {
   const [prevBoard, setPrevBoard] = useState(initialBoard);
   const [canBack, setCanBack] = useState(false);
 
-  const reset = () => setBoard(initialBoard);
+  const reload = () => setBoard(initialBoard);
   const backPrevBoard = () => {
     setBoard(prevBoard);
     setCanBack(false);
@@ -70,5 +70,5 @@ export function useBoard() {
     return () => window.removeEventListener('keydown', handleMove);
   }, [handleMove]);
 
-  return { board, reset, backPrevBoard, canBack };
+  return { board, reload, backPrevBoard, canBack };
 }

@@ -1,11 +1,19 @@
 button {
   border: none;
+  background-color: var(--grid-color);
   border-radius: 4px;
   font-family: 'Audiowide', sans-serif;
   transition: all 0.2s;
+  padding: 0;
+  cursor: pointer;
+
+  &:active {
+    background-color: var(--grid-color-light);
+  }
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    pointer-events: none;
   }
 }
