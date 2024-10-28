@@ -6,7 +6,7 @@ export default function Board({ board }: { board: TileType[][] }) {
   const style = { gridTemplateColumns: `repeat(${LINES}, 1fr)` };
 
   return (
-    <div className="Board" style={style}>
+    <div className="Board fade-in" style={style}>
       {board.flat().map((tile, position: number) => (
         <Tile key={position} tile={tile} />
       ))}

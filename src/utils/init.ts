@@ -12,13 +12,13 @@ const initialBoard: TileType[][] = Array.from({ length: LINES }, () =>
   }),
 );
 
-initialBoard[3][0] = {
+initialBoard[1][0] = {
   value: 2,
   isNew: false,
   isMerged: false,
   direction: null,
 };
-initialBoard[3][1] = {
+initialBoard[1][1] = {
   value: 2,
   isNew: false,
   isMerged: false,

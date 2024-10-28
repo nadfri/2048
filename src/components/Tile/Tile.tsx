@@ -13,11 +13,11 @@ export default function Tile({ tile }: { tile: TileType }) {
 
   let className = 'value';
 
-  if (tile.isNew) className = 'value scale';
+  if (tile.isNew) className += ' scale';
 
-  if (tile.isMerged) className = 'value scale-merge';
+  if (tile.direction && !tile.isMerged) className += ` slide-${tile.direction}`;
 
-  if (tile.direction) className += ' slide-' + tile.direction;
+  if (tile.isMerged) className += ` slide-merge-${tile.direction}`;
 
   return (
     <div className="Tile">

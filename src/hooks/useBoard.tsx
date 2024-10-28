@@ -1,3 +1,4 @@
+import { initialBoard } from '@/utils/init';
 import { useState, useCallback, useEffect } from 'react';
 import {
   Direction,
@@ -5,8 +6,8 @@ import {
   slideLine,
   addNewNumberToBoard,
   resetTileStates,
+  directions,
 } from '@/utils/utils';
-import { initialBoard } from '@/utils/init';
 
 export function useBoard() {
   const [board, setBoard] = useState(initialBoard);
@@ -15,8 +16,6 @@ export function useBoard() {
 
   const handleMove = useCallback(
     (event: KeyboardEvent) => {
-      const directions = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-
       const direction = event.key as Direction;
 
       if (!directions.includes(direction)) return;
@@ -30,8 +29,9 @@ export function useBoard() {
 
       const updatedBoard = resetBoard.map((line) => slideLine(line, direction));
 
-      const isBoardChanged =
-        JSON.stringify(orientedBoard) !== JSON.stringify(updatedBoard);
+      const isBoardChanged = orientedBoard.some((row, i) =>
+        row.some((tile, j) => tile.value !== updatedBoard[i][j].value),
+      );
 
       if (!isBoardChanged) return;
 
