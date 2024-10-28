@@ -8,6 +8,7 @@ function App() {
   return (
     <div className="App">
       <h1>2048</h1>
+
       <Board board={board} />
 
       <button className="reset" onClick={reset}>
