@@ -3,7 +3,7 @@ import Board from './components/Board/Board';
 import { useBoard } from './hooks/useBoard';
 
 function App() {
-  const { reset, board } = useBoard();
+  const { reset, board, backPrevBoard, canBack } = useBoard();
 
   return (
     <div className="App">
@@ -13,6 +13,10 @@ function App() {
 
       <button className="reset" onClick={reset}>
         RESET
+      </button>
+
+      <button className="reset" onClick={backPrevBoard} disabled={!canBack}>
+        BACK
       </button>
     </div>
   );

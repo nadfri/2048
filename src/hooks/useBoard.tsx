@@ -11,8 +11,14 @@ import { Directions } from '@/types/types';
 
 export function useBoard() {
   const [board, setBoard] = useState(initialBoard);
+  const [prevBoard, setPrevBoard] = useState(initialBoard);
+  const [canBack, setCanBack] = useState(false);
 
   const reset = () => setBoard(initialBoard);
+  const backPrevBoard = () => {
+    setBoard(prevBoard);
+    setCanBack(false);
+  };
 
   const handleMove = useCallback(
     (event: KeyboardEvent) => {
@@ -50,6 +56,9 @@ export function useBoard() {
           ? transposeArray(boardWithNewNumber)
           : boardWithNewNumber,
       );
+
+      setPrevBoard(board);
+      setCanBack(true);
     },
     [board],
   );
@@ -61,5 +70,5 @@ export function useBoard() {
     return () => window.removeEventListener('keydown', handleMove);
   }, [handleMove]);
 
-  return { board, reset };
+  return { board, reset, backPrevBoard, canBack };
 }
