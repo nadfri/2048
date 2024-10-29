@@ -11,4 +11,5 @@ export type StorageType = {
   board: TileType[][];
   score: number;
   highScore: number;
+  maxValue: number;
 } | null;

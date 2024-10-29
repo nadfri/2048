@@ -139,6 +139,10 @@ export function addSlideDirectionToLine(
   });
 }
 
+export function getMaxValue(board: TileType[][]): number {
+  return Math.max(...board.flat().map((tile) => tile.value), 0);
+}
+
 const hasZero = (array: TileType[][]): boolean =>
   JSON.stringify(array).includes('"value":0');
 

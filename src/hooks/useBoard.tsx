@@ -6,6 +6,7 @@ import {
   addNewNumberToBoard,
   resetTileStates,
   directions,
+  getMaxValue,
 } from '@/utils/utils';
 import { Directions } from '@/types/types';
 import { getFromStorage, saveInStorage } from '@/utils/storage';
@@ -18,10 +19,14 @@ export function useBoard() {
   const [canBack, setCanBack] = useState(false);
   const [score, setScore] = useState(dataStorage?.score || 0);
   const [highScore, setHighScore] = useState(dataStorage?.highScore || 0);
+  const [maxValue, setMaxValue] = useState(dataStorage?.maxValue || 0);
 
   const reload = () => {
     setBoard(initialBoard);
     setScore(0);
+    setMaxValue(0);
+    setPrevBoard(initialBoard);
+    setCanBack(false);
   };
 
   const backPrevBoard = () => {
@@ -34,7 +39,7 @@ export function useBoard() {
 
     setScore((prev) => prev - prevScore);
 
-    saveInStorage(prevBoard, score - prevScore, highScore);
+    saveInStorage(prevBoard, score - prevScore, highScore, maxValue);
   };
 
   const handleMove = useCallback(
@@ -71,6 +76,9 @@ export function useBoard() {
 
       setScore(newScore);
 
+      const newMaxValue = getMaxValue(updatedBoard);
+      setMaxValue(newMaxValue);
+
       const newHighScore = newScore > highScore ? newScore : highScore;
       setHighScore(newHighScore);
 
@@ -85,7 +93,7 @@ export function useBoard() {
 
       setPrevBoard(board);
       setCanBack(true);
-      saveInStorage(boardWithNewNumber, newScore, newHighScore);
+      saveInStorage(boardWithNewNumber, newScore, newHighScore, maxValue);
     },
     [board],
   );
@@ -97,5 +105,13 @@ export function useBoard() {
     return () => window.removeEventListener('keydown', handleMove);
   }, [handleMove]);
 
-  return { board, reload, backPrevBoard, canBack, score, highScore };
+  return {
+    board,
+    reload,
+    backPrevBoard,
+    canBack,
+    score,
+    highScore,
+    maxValue,
+  };
 }

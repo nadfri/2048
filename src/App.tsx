@@ -5,14 +5,14 @@ import Score from './components/Score/Score';
 import BtnAction from './components/BtnAction/BtnAction';
 
 function App() {
-  const { reload, board, backPrevBoard, canBack, score, highScore } =
+  const { reload, board, backPrevBoard, canBack, score, highScore, maxValue } =
     useBoard();
 
   return (
     <div className="App">
       <h1>2048</h1>
 
-      <Score score={score} highScore={highScore} />
+      <Score score={score} highScore={highScore} maxValue={maxValue} />
 
       <Board board={board} />
 
