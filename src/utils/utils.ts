@@ -8,10 +8,13 @@ export const directions: Directions[] = [
   'ArrowUp',
 ];
 
-export function slideLine(line: TileType[], direction: Directions): TileType[] {
+export function slideLine(
+  line: TileType[],
+  direction: Directions,
+): { newLine: TileType[]; scoreGained: number } {
   const valuesWithoutZero = line.filter((tile) => tile.value !== 0);
 
-  if (valuesWithoutZero.length === 0) return line;
+  if (valuesWithoutZero.length === 0) return { newLine: line, scoreGained: 0 };
 
   let isReversed = false;
   if (direction === 'ArrowLeft' || direction === 'ArrowUp') {
@@ -19,16 +22,16 @@ export function slideLine(line: TileType[], direction: Directions): TileType[] {
     isReversed = true;
   }
 
-  const mergedWithoutZero = mergeLineValues(valuesWithoutZero);
+  const { mergedLine, scoreGained } = mergeLineValues(valuesWithoutZero);
 
-  const zeros: TileType[] = Array(LINES - mergedWithoutZero.length).fill({
+  const zeros: TileType[] = Array(LINES - mergedLine.length).fill({
     value: 0,
     isNew: false,
     isMerged: false,
     direction: null,
   });
 
-  let newLine: TileType[] = [...zeros, ...mergedWithoutZero];
+  let newLine: TileType[] = [...zeros, ...mergedLine];
 
   if (isReversed) newLine.reverse();
 
@@ -36,17 +39,21 @@ export function slideLine(line: TileType[], direction: Directions): TileType[] {
     (tile, index) => tile.value !== newLine[index].value,
   );
 
-  if (!isLineChanged) return line;
+  if (!isLineChanged) return { newLine: line, scoreGained: 0 };
 
   newLine = addSlideDirectionToLine(newLine, line, direction);
 
-  return newLine;
+  return { newLine, scoreGained };
 }
 
-function mergeLineValues(line: TileType[]): TileType[] {
-  if (line.length < 2) return line;
+export function mergeLineValues(line: TileType[]): {
+  mergedLine: TileType[];
+  scoreGained: number;
+} {
+  if (line.length < 2) return { mergedLine: line, scoreGained: 0 };
 
   const deepCopyLine = line.map((tile) => ({ ...tile }));
+  let scoreGained = 0;
 
   for (let i = deepCopyLine.length - 1; i > 0; i--) {
     if (
@@ -55,22 +62,19 @@ function mergeLineValues(line: TileType[]): TileType[] {
     ) {
       deepCopyLine[i - 1].value *= 2;
       deepCopyLine[i - 1].isMerged = true;
+      scoreGained += deepCopyLine[i - 1].value;
       deepCopyLine[i] = {
         value: 0,
         isNew: false,
         isMerged: false,
         direction: null,
       };
-
       i--;
     }
   }
 
-  const mergedWithoutZero = deepCopyLine.filter(
-    (tile: TileType) => tile.value !== 0,
-  );
-
-  return mergedWithoutZero;
+  const mergedWithoutZero = deepCopyLine.filter((tile) => tile.value !== 0);
+  return { mergedLine: mergedWithoutZero, scoreGained };
 }
 
 function getZerosIndexes(array: TileType[][]): number[][] {
@@ -102,6 +106,7 @@ export function addNewNumberToBoard(board: TileType[][]): TileType[][] {
     Math.random() < PERCENT_OF_2 ? 2 : 4;
 
   deepCopyBoard[rowIndex][columnIndex].isNew = true;
+  deepCopyBoard[rowIndex][columnIndex].direction = null;
 
   return deepCopyBoard;
 }

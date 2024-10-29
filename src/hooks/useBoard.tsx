@@ -14,39 +14,44 @@ import { getFromStorage, saveInStorage } from '@/utils/storage';
 export function useBoard() {
   const dataStorage = getFromStorage();
 
-  const [board, setBoard] = useState(dataStorage?.board || newBoard());
+  const [board, setBoard] = useState<TileType[][]>(
+    dataStorage?.board || newBoard(),
+  );
   const [prevBoard, setPrevBoard] = useState<TileType[][] | null>(null);
   const [canBack, setCanBack] = useState(false);
-  const [score, setScore] = useState(dataStorage?.score || 0);
-  const [highScore, setHighScore] = useState(dataStorage?.highScore || 0);
-  const [maxValue, setMaxValue] = useState(dataStorage?.maxValue || 0);
+  const [score, setScore] = useState<number>(dataStorage?.score || 0);
+  const [prevScore, setPrevScore] = useState<number>(dataStorage?.score || 0);
+  const [highScore, setHighScore] = useState<number>(
+    dataStorage?.highScore || 0,
+  );
+  const [maxValue, setMaxValue] = useState<number>(dataStorage?.maxValue || 0);
 
   const reload = () => {
-    setBoard(newBoard());
+    const newInitialBoard = newBoard();
+    setBoard(newInitialBoard);
     setScore(0);
     setMaxValue(0);
     setCanBack(false);
-    saveInStorage({ board: null, score: 0, highScore, maxValue: 0 });
+    saveInStorage({
+      board: newInitialBoard,
+      score: 0,
+      highScore,
+      maxValue: 0,
+    });
   };
 
   const backPrevBoard = () => {
-    if (!prevBoard) return;
-
-    setBoard(prevBoard);
-    setCanBack(false);
-
-    const prevScore = prevBoard
-      .flat()
-      .reduce((acc, tile) => acc + tile.value, 0);
-
-    setScore((prev) => prev - prevScore);
-
-    saveInStorage({
-      board: prevBoard,
-      score: score - prevScore,
-      highScore,
-      maxValue,
-    });
+    if (prevBoard) {
+      setBoard(prevBoard);
+      setScore(prevScore);
+      setCanBack(false);
+      saveInStorage({
+        board: prevBoard,
+        score: prevScore,
+        highScore,
+        maxValue,
+      });
+    }
   };
 
   const handleMove = useCallback(
@@ -59,17 +64,21 @@ export function useBoard() {
         direction === 'ArrowDown' || direction === 'ArrowUp';
 
       /***#1 Reset the tile states***/
-      const newBoard = resetTileStates(board);
+      const resetedBoard = resetTileStates(board);
 
-      /***#2 Change Orientation for Vertical move**/
+      /***#2 Change Orientation for Vertical move***/
       const orientedBoard = isVerticalMove
-        ? transposeArray(newBoard)
-        : newBoard;
+        ? transposeArray(resetedBoard)
+        : resetedBoard;
 
       /***#3 Update Board after slide move***/
-      const updatedBoard = orientedBoard.map((line) =>
-        slideLine(line, direction),
-      );
+      let totalScoreGained = 0;
+
+      const updatedBoard = orientedBoard.map((line) => {
+        const { newLine, scoreGained } = slideLine(line, direction);
+        totalScoreGained += scoreGained;
+        return newLine;
+      });
 
       const isBoardChanged = orientedBoard.some((row, i) =>
         row.some((tile, j) => tile.value !== updatedBoard[i][j].value),
@@ -78,9 +87,8 @@ export function useBoard() {
       if (!isBoardChanged) return;
 
       /***#4 Update Score***/
-      const newScore =
-        score + updatedBoard.flat().reduce((acc, tile) => acc + tile.value, 0);
-
+      const newScore = score + totalScoreGained;
+      setPrevScore(score);
       setScore(newScore);
 
       const newMaxValue = getMaxValue(updatedBoard);
@@ -89,9 +97,8 @@ export function useBoard() {
       const newHighScore = newScore > highScore ? newScore : highScore;
       setHighScore(newHighScore);
 
-      /***#4 Add new number to the board if has changed***/
+      /***#5 Add new number to the board if has changed***/
       const boardWithNewNumber = addNewNumberToBoard(updatedBoard);
-
       const finalBoard = isVerticalMove
         ? transposeArray(boardWithNewNumber)
         : boardWithNewNumber;
@@ -107,14 +114,15 @@ export function useBoard() {
         maxValue: newMaxValue,
       });
     },
-    [board, highScore, score],
+    [board, score, highScore],
   );
 
   useEffect(() => {
     window.addEventListener('keydown', handleMove);
 
-    /*CleanUp*/
-    return () => window.removeEventListener('keydown', handleMove);
+    return () => {
+      window.removeEventListener('keydown', handleMove);
+    };
   }, [handleMove]);
 
   return {

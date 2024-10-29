@@ -8,12 +8,12 @@ function newBoard(): TileType[][] {
   const randomColumnIndex = Math.floor(Math.random() * LINES);
 
   const initialBoard: TileType[][] = Array.from({ length: LINES }, () =>
-    Array(LINES).fill({
+    Array.from({ length: LINES }, () => ({
       value: 0,
       isNew: false,
       isMerged: false,
       direction: null,
-    }),
+    })),
   );
 
   initialBoard[randomRowIndex][randomColumnIndex] = {
