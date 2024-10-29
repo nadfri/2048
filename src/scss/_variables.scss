@@ -3,24 +3,25 @@
   --grid-color: #4d6697;
   --grid-color-50: #4d669788;
   --grid-color-light: #6e8abf;
-  --text-color: #cd5554;
+  --text-color: #cd5554; 
 
-  --tile-0-color: #698593;
-  --tile-2-color: #e8e8eb;
-  --tile-4-color: #d8d8ee;
-  --tile-8-color: #cacaeb;
-  --tile-16-color: #b1b1f1;
-  --tile-32-color: #a0a0f1;
-  --tile-64-color: #8989eb;
+  --tile-0-color: #808080;
+  --tile-2-color: #f2f2f0;    
+  --tile-4-color: #e0dbcc;      
+  --tile-8-color: #d6bd93;
 
-  --tile-128-color: #cc78b3;
-  --tile-256-color: #ce5eac;
-  --tile-512-color: #b13d8e;
-  --tile-1024-color: #942b6f;
-  --tile-2048-color: #76194f;
-  --tile-4096-color: #5a0f3f;
+  --tile-16-color: #cfa96c;   
+  --tile-32-color: #eec64d;   
+  --tile-64-color: #ffe600;   
+  --tile-128-color: #fff06b;  
 
-  --tile-8192-color: #394f6b;
-  --tile-16384-color: #2b3c4f;
-  --tile-32768-color: #1d2933;
+  --tile-256-color: #b6e3c6;  
+  --tile-512-color: #85e4a6;   
+  --tile-1024-color: #143f61;  
+  --tile-2048-color: #1b1b35;  
+
+  --tile-4096-color: #1c29b1;  
+  --tile-8192-color: #393e71;   
+  --tile-16384-color: #55262d;  
+  --tile-32768-color: #000;  
 }

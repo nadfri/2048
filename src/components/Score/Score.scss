@@ -7,16 +7,23 @@
 }
 
 .score {
-  text-align: right;
-  min-width: 100px;
+  display: flex;
+  flex-direction: column;
   padding: 6px 8px;
   font-size: 16px;
   border-radius: 4px;
   background-color: var(--grid-color-50);
 }
 
+.score-title {
+  font-size: 14px;
+  color: var(--tile-2-color);
+}
+
+.score-value {
+  text-align: right;
+}
+
 .high-score {
-  display: inline-flex;
-  justify-content: space-between;
-  background-color: var(--tile-2-color);
+  background-color: var(--grid-color-50);
 }

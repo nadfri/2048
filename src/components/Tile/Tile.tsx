@@ -12,9 +12,11 @@ export default function Tile({ tile }: { tile: TileType }) {
 
   if (tile.isMerged) className += ` slide-merge-${tile.direction}`;
 
+  const fontSize = tile.value > 512 ? '1.45rem' : '1.8rem';
+
   return (
     <div className="Tile">
-      <div className={className} style={{ backgroundColor }}>
+      <div className={className} style={{ backgroundColor, fontSize }}>
         <span>{tile.value || ''}</span>
       </div>
     </div>

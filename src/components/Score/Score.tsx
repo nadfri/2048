@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import StarIcon from '../StarIcon/StarIcon';
 import './Score.scss';
 
 type Props = {
@@ -16,10 +15,14 @@ export default function Score({ score, highScore, maxValue }: Props) {
   return (
     <div className="Score">
       <div className="score high-score">
-        <StarIcon />
-        <span>{highScore}</span>
+        <span className="score-title">HIGH SC✪RE</span>
+        <span className="score-value">{highScore}</span>
       </div>
-      <div className="score">{score}</div>
+
+      <div className="score">
+        <span className="score-title">SC✪RE</span>{' '}
+        <span className="score-value">{score}</span>
+      </div>
     </div>
   );
 }

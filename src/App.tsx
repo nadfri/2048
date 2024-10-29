@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>2048</h1>
+      <h1>{maxValue < 2048 ? '2048' : maxValue}</h1>
 
       <Score score={score} highScore={highScore} maxValue={maxValue} />
 

@@ -95,7 +95,7 @@ export function useBoard() {
       setCanBack(true);
       saveInStorage(boardWithNewNumber, newScore, newHighScore, maxValue);
     },
-    [board],
+    [board, highScore, maxValue, score],
   );
 
   useEffect(() => {

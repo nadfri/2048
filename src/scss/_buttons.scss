@@ -7,13 +7,12 @@ button {
   padding: 0;
   cursor: pointer;
 
-  &:active {
+  &:active:not(:disabled) {
     background-color: var(--grid-color-light);
   }
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    pointer-events: none;
   }
 }
