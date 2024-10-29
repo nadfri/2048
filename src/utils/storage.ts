@@ -1,12 +1,6 @@
-import { StorageType, TileType } from '@/types/types';
+import { StorageType } from '@/types/types';
 
-export const saveInStorage = (
-  board: TileType[][],
-  score: number,
-  highScore: number,
-  maxValue: number,
-) => {
-  const data = { board, score, highScore, maxValue };
+export const saveInStorage = (data: StorageType) => {
   localStorage.setItem('2048', JSON.stringify(data));
 };
 

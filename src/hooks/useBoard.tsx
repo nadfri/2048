@@ -1,4 +1,4 @@
-import { initialBoard } from '@/utils/init';
+import { newBoard } from '@/utils/init';
 import { useState, useCallback, useEffect } from 'react';
 import {
   transposeArray,
@@ -8,28 +8,30 @@ import {
   directions,
   getMaxValue,
 } from '@/utils/utils';
-import { Directions } from '@/types/types';
+import { Directions, TileType } from '@/types/types';
 import { getFromStorage, saveInStorage } from '@/utils/storage';
 
 export function useBoard() {
   const dataStorage = getFromStorage();
 
-  const [board, setBoard] = useState(dataStorage?.board || initialBoard);
-  const [prevBoard, setPrevBoard] = useState(initialBoard);
+  const [board, setBoard] = useState(dataStorage?.board || newBoard());
+  const [prevBoard, setPrevBoard] = useState<TileType[][] | null>(null);
   const [canBack, setCanBack] = useState(false);
   const [score, setScore] = useState(dataStorage?.score || 0);
   const [highScore, setHighScore] = useState(dataStorage?.highScore || 0);
   const [maxValue, setMaxValue] = useState(dataStorage?.maxValue || 0);
 
   const reload = () => {
-    setBoard(initialBoard);
+    setBoard(newBoard());
     setScore(0);
     setMaxValue(0);
-    setPrevBoard(initialBoard);
     setCanBack(false);
+    saveInStorage({ board: null, score: 0, highScore, maxValue: 0 });
   };
 
   const backPrevBoard = () => {
+    if (!prevBoard) return;
+
     setBoard(prevBoard);
     setCanBack(false);
 
@@ -39,7 +41,12 @@ export function useBoard() {
 
     setScore((prev) => prev - prevScore);
 
-    saveInStorage(prevBoard, score - prevScore, highScore, maxValue);
+    saveInStorage({
+      board: prevBoard,
+      score: score - prevScore,
+      highScore,
+      maxValue,
+    });
   };
 
   const handleMove = useCallback(
@@ -60,8 +67,8 @@ export function useBoard() {
         : newBoard;
 
       /***#3 Update Board after slide move***/
-      const updatedBoard = orientedBoard.map(
-        (line) => slideLine(line, direction).newLineWithDirection,
+      const updatedBoard = orientedBoard.map((line) =>
+        slideLine(line, direction),
       );
 
       const isBoardChanged = orientedBoard.some((row, i) =>
@@ -85,17 +92,22 @@ export function useBoard() {
       /***#4 Add new number to the board if has changed***/
       const boardWithNewNumber = addNewNumberToBoard(updatedBoard);
 
-      setBoard(
-        isVerticalMove
-          ? transposeArray(boardWithNewNumber)
-          : boardWithNewNumber,
-      );
+      const finalBoard = isVerticalMove
+        ? transposeArray(boardWithNewNumber)
+        : boardWithNewNumber;
 
       setPrevBoard(board);
+      setBoard(finalBoard);
       setCanBack(true);
-      saveInStorage(boardWithNewNumber, newScore, newHighScore, maxValue);
+
+      saveInStorage({
+        board: finalBoard,
+        score: newScore,
+        highScore: newHighScore,
+        maxValue: newMaxValue,
+      });
     },
-    [board, highScore, maxValue, score],
+    [board, highScore, score],
   );
 
   useEffect(() => {

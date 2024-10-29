@@ -8,7 +8,7 @@ export type TileType = {
 };
 
 export type StorageType = {
-  board: TileType[][];
+  board: TileType[][] | null;
   score: number;
   highScore: number;
   maxValue: number;
