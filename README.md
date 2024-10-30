@@ -1,50 +1,54 @@
-# React + TypeScript + Vite
+# 2048
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to **2048**, a replica of the famous puzzle game where the goal is to reach the 2048 tile by combining tiles of the same value. This project is developed using **React**, **TypeScript**, and **Vite** to provide a smooth and responsive experience, whether on desktop or mobile.
 
-Currently, two official plugins are available:
+You can play **2048** directly online via this link: [https://2048-nadfrijs.netlify.app/](https://2048-nadfrijs.netlify.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Screenshot](https://2048-nadfrijs.netlify.app/screenshot.webp)
 
-## Expanding the ESLint configuration
+- **Keyboard Controls**: Use the arrow keys to move the tiles.
+- **Touch Gestures**: Compatible with mobile devices for intuitive movements.
+- **Auto Save**: Your progress is automatically saved in local storage.
+- **Undo Option**: Revert to the previous state if needed.
+- **Responsive Design**: Adapted to different screen sizes for an optimal experience on all devices.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- [React](https://reactjs.org/) - JavaScript library for building user interfaces.
+- [TypeScript](https://www.typescriptlang.org/) - JavaScript superset that adds static typing.
+- [Vite](https://vitejs.dev/) - Fast build tool for modern front-end projects.
+- [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/) - Tools for code linting and formatting.
+- [Sass](https://sass-lang.com/) - CSS preprocessor for more organized styling.
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- [Node.js](https://nodejs.org/) (version min v18)
+- [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Steps
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. **Clone the repository**
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+   ```bash
+   git clone https://github.com/your-username/2048.git
+   ```
+
+2. **Navigate to the project directory**
+
+   ```bash
+   cd 2048
+   ```
+
+3. **Install dependencies**
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+4. **Start the development server**
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```

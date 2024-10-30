@@ -28,6 +28,7 @@ function App() {
         reload={reload}
         backPrevBoard={backPrevBoard}
         canBack={canBack}
+        maxValue={maxValue}
       />
     </div>
   );

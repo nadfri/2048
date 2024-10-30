@@ -3,15 +3,29 @@ import ReloadIcon from '../ReloadIcon/ReloadIcon';
 import './BtnAction.scss';
 import ScreenIcon from '../ScreenIcon/ScreenIcon';
 import ExitIcon from '../ExitIcon/ExitIcon';
+import Tile from '../Tile/Tile';
 
 type Props = {
   reload: () => void;
   backPrevBoard: () => void;
   canBack: boolean;
+  maxValue: number;
 };
 
-export default function BtnAction({ reload, backPrevBoard, canBack }: Props) {
+export default function BtnAction({
+  reload,
+  backPrevBoard,
+  canBack,
+  maxValue,
+}: Props) {
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const tile = {
+    value: maxValue,
+    isNew: false,
+    isMerged: false,
+    direction: null,
+  };
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -29,11 +43,15 @@ export default function BtnAction({ reload, backPrevBoard, canBack }: Props) {
 
   return (
     <div className="BtnAction">
-      <button onClick={toggleFullscreen} className="btn-full">
-        {isFullscreen ? <ExitIcon /> : <ScreenIcon />}
-      </button>
+      {maxValue > 2 && <Tile tile={tile} />}
 
-      <button className="btn-reload" onClick={reload}>
+      {!isIOS && (
+        <button onClick={toggleFullscreen} className="btn-icon">
+          {isFullscreen ? <ExitIcon /> : <ScreenIcon />}
+        </button>
+      )}
+
+      <button className="btn-icon btn-reload" onClick={reload}>
         <ReloadIcon />
       </button>
 

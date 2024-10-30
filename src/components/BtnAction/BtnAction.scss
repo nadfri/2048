@@ -4,36 +4,42 @@
   display: flex;
   justify-content: flex-end;
   gap: 16px;
-}
 
-.btn-back {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  .btn-back {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 
-  padding: 5px 10px;
-  font-size: 16px;
+    padding: 5px 10px;
+    font-size: 16px;
 
-  color: var(--text-color);
+    color: var(--text-color);
 
-  .arrow {
-    font-size: 2rem;
+    .arrow {
+      font-size: 2rem;
+    }
   }
-}
 
-.btn-reload {
-  display: grid;
-  place-items: center;
-  width: 50px;
-
-  &:active .ReloadIcon {
-    rotate: 180deg;
+  .btn-icon {
+    width: 52px;
+    display: grid;
+    place-items: center;
+    color: var(--text-color);
   }
-}
 
-.btn-full{
-  width: 50px;
-  display: grid;
-  place-items: center;
-  color: var(--text-color);
+  .btn-reload {
+    &:active .ReloadIcon {
+      rotate: 180deg;
+    }
+  }
+
+  .Tile {
+    max-height: 52px;
+    min-width: 52px;
+    margin-right: auto;
+
+    .value {
+      font-size: 1.45rem !important;
+    }
+  }
 }
