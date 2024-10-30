@@ -99,24 +99,24 @@ export function useBoard() {
 
       /***#4 Update Score***/
       const newScore = score + totalScoreGained;
-      setPrevScore(score);
-      setScore(newScore);
-
       const newMaxValue = getMaxValue(updatedBoard);
-      setMaxValue(newMaxValue);
-
       const newHighScore = newScore > highScore ? newScore : highScore;
-      setHighScore(newHighScore);
 
       /***#5 Add new number to the board if has changed***/
       const boardWithNewNumber = addNewNumberToBoard(updatedBoard);
+
       const finalBoard = isVerticalMove
         ? transposeArray(boardWithNewNumber)
         : boardWithNewNumber;
 
+      /***#6 Set the new state***/
       setPrevBoard(board);
       setBoard(finalBoard);
       setCanBack(true);
+      setPrevScore(score);
+      setScore(newScore);
+      setHighScore(newHighScore);
+      setMaxValue(newMaxValue);
 
       saveInStorage({
         board: finalBoard,
