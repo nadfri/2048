@@ -8,6 +8,13 @@ export const directions: Directions[] = [
   'ArrowUp',
 ];
 
+export const defaultTile = (): TileType => ({
+  value: 0,
+  isNew: false,
+  isMerged: false,
+  direction: null,
+});
+
 type SlideLineResult = {
   newLine: TileType[];
   scoreGained: number;
@@ -18,27 +25,23 @@ export function slideLine(
   direction: Directions,
 ): SlideLineResult {
   /*#1 Remove zeros from the line*/
-  const valuesWithoutZero = line.filter((tile) => tile.value !== 0);
-  if (valuesWithoutZero.length === 0) return { newLine: line, scoreGained: 0 };
+  const lineWithoutZero = line.filter((tile) => tile.value !== 0);
+  if (lineWithoutZero.length === 0) return { newLine: line, scoreGained: 0 };
 
   /*#2 Orient the line */
   let isReversed = false;
   if (direction === 'ArrowLeft' || direction === 'ArrowUp') {
-    valuesWithoutZero.reverse();
+    lineWithoutZero.reverse();
     isReversed = true;
   }
 
   /*#3 Merge tiles of the line */
-  const mergeResult = mergeLineValues(valuesWithoutZero);
-  const { mergedLine, scoreGained } = mergeResult;
+  const { mergedLine, scoreGained } = mergeLineValues(lineWithoutZero);
 
   /*#4 Add zeros to the line */
-  const zeros: TileType[] = Array(LINES - mergedLine.length).fill({
-    value: 0,
-    isNew: false,
-    isMerged: false,
-    direction: null,
-  });
+  const zeros: TileType[] = Array(LINES - mergedLine.length).fill(
+    defaultTile(),
+  );
 
   let newLine: TileType[] = isReversed
     ? [...mergedLine, ...zeros]
@@ -50,6 +53,7 @@ export function slideLine(
 
   if (!isLineChanged) return { newLine: line, scoreGained: 0 };
 
+  /*#5 Add slide direction to the line for animation*/
   newLine = addSlideDirectionToLine(newLine, line, direction);
 
   return { newLine, scoreGained };
@@ -75,12 +79,7 @@ function mergeLineValues(line: TileType[]): MergeLineResult {
       deepCopyLine[i - 1].isMerged = true;
       scoreGained += deepCopyLine[i - 1].value;
 
-      deepCopyLine[i] = {
-        value: 0,
-        isNew: false,
-        isMerged: false,
-        direction: null,
-      };
+      deepCopyLine[i] = defaultTile();
       i--;
     }
   }
