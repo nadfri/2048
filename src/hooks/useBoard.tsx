@@ -72,8 +72,7 @@ export function useBoard() {
       const updatedBoard = orientedBoard.map((line) => {
         const slideResult = slideLine(line, direction);
 
-        const newLine = slideResult.line;
-        const scoreGained = slideResult.scoreGained;
+        const { newLine, scoreGained } = slideResult;
 
         totalScoreGained += scoreGained;
         return newLine;

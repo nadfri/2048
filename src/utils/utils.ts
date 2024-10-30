@@ -9,7 +9,7 @@ export const directions: Directions[] = [
 ];
 
 type SlideLineResult = {
-  line: TileType[];
+  newLine: TileType[];
   scoreGained: number;
 };
 
@@ -19,7 +19,7 @@ export function slideLine(
 ): SlideLineResult {
   /*#1 Remove zeros from the line*/
   const valuesWithoutZero = line.filter((tile) => tile.value !== 0);
-  if (valuesWithoutZero.length === 0) return { line, scoreGained: 0 };
+  if (valuesWithoutZero.length === 0) return { newLine: line, scoreGained: 0 };
 
   /*#2 Orient the line */
   let isReversed = false;
@@ -48,11 +48,11 @@ export function slideLine(
     (tile, index) => tile.value !== newLine[index].value,
   );
 
-  if (!isLineChanged) return { line, scoreGained: 0 };
+  if (!isLineChanged) return { newLine: line, scoreGained: 0 };
 
   newLine = addSlideDirectionToLine(newLine, line, direction);
 
-  return { line: newLine, scoreGained };
+  return { newLine, scoreGained };
 }
 
 type MergeLineResult = {
