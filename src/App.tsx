@@ -13,8 +13,7 @@ function App() {
     score,
     highScore,
     maxValue,
-    handleTouchStart,
-    handleTouchEnd,
+    handleMove,
   } = useBoard();
 
   return (
@@ -23,11 +22,7 @@ function App() {
 
       <Score score={score} highScore={highScore} maxValue={maxValue} />
 
-      <Board
-        board={board}
-        handleTouchStart={handleTouchStart}
-        handleTouchEnd={handleTouchEnd}
-      />
+      <Board board={board} handleMove={handleMove} />
 
       <BtnAction
         reload={reload}

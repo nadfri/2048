@@ -157,3 +157,14 @@ const array = [
 
 Output: [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
 */
+
+export function determineSwipeDirection(
+  deltaX: number,
+  deltaY: number,
+): Directions {
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    return deltaX > 0 ? 'ArrowRight' : 'ArrowLeft';
+  } else {
+    return deltaY > 0 ? 'ArrowDown' : 'ArrowUp';
+  }
+}
