@@ -21,22 +21,18 @@ export function slideLine(
   const lineWithoutZero = line.filter((tile) => tile.value !== 0);
   if (lineWithoutZero.length === 0) return { newLine: line, scoreGained: 0 };
 
-  /*#2 Orient the line */
-  let isReversed = false;
-  if (direction === 'ArrowLeft' || direction === 'ArrowUp') {
-    lineWithoutZero.reverse();
-    isReversed = true;
-  }
-
-  /*#3 Merge tiles of the line */
+  /*#2 Merge tiles of the line */
   const { mergedLine, scoreGained } = mergeLineValues(lineWithoutZero);
 
-  /*#4 Add zeros to the line */
+  /*#3 Add zeros to the line */
   const zeros: TileType[] = Array(LINES - mergedLine.length).fill(
     defaultTile(),
   );
 
-  let newLine: TileType[] = isReversed
+  const is_Left_Or_Up = direction === 'ArrowLeft' || direction === 'ArrowUp';
+
+  /*#4 Orient new line*/
+  let newLine: TileType[] = is_Left_Or_Up
     ? [...mergedLine, ...zeros]
     : [...zeros, ...mergedLine];
 
