@@ -1,4 +1,4 @@
-import { LINES, PERCENT_OF_2 } from './init';
+import { defaultTile, LINES, PERCENT_OF_2 } from './init';
 import { Directions, TileType } from '@/types/types';
 
 export const directions: Directions[] = [
@@ -7,13 +7,6 @@ export const directions: Directions[] = [
   'ArrowDown',
   'ArrowUp',
 ];
-
-export const defaultTile = (): TileType => ({
-  value: 0,
-  isNew: false,
-  isMerged: false,
-  direction: null,
-});
 
 type SlideLineResult = {
   newLine: TileType[];

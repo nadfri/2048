@@ -1,8 +1,14 @@
 import { TileType } from '@/types/types';
-import { defaultTile } from './utils';
 
 const LINES = 4;
 const PERCENT_OF_2 = 0.7;
+
+export const defaultTile = (): TileType => ({
+  value: 0,
+  isNew: false,
+  isMerged: false,
+  direction: null,
+});
 
 function newBoard(): TileType[][] {
   const randomRowIndex = Math.floor(Math.random() * LINES);
