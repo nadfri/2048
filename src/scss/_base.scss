@@ -8,6 +8,8 @@ body {
   color: var(--text-color);
   font-family: 'Audiowide', sans-serif;
 
+  transition: background-color 0.5s;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

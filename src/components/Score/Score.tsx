@@ -10,6 +10,9 @@ type Props = {
 export default function Score({ score, highScore, maxValue }: Props) {
   useEffect(() => {
     document.title = `2048 | ${maxValue > 2048 ? maxValue + ' ✪' : maxValue}`;
+
+    document.body.style.backgroundColor =
+      maxValue < 2048 ? 'var(--bg-color)' : 'var(--bg-dark)';
   }, [maxValue]);
 
   return (

@@ -40,6 +40,7 @@ export function useBoard() {
       setBoard(prevBoard);
       setScore(prevScore);
       setCanBack(false);
+      setMaxValue(getMaxValue(prevBoard));
       saveInStorage({
         board: prevBoard,
         score: prevScore,
