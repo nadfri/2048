@@ -1,5 +1,5 @@
 import { newBoard } from '@/utils/init';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import {
   transposeArray,
   slideLine,
@@ -49,10 +49,19 @@ export function useBoard() {
     }
   };
 
-  const handleMove = useCallback(
-    (event: KeyboardEvent) => {
-      const direction = event.key as Directions;
+  const determineSwipeDirection = useCallback(
+    (deltaX: number, deltaY: number): Directions => {
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        return deltaX > 0 ? 'ArrowRight' : 'ArrowLeft';
+      } else {
+        return deltaY > 0 ? 'ArrowDown' : 'ArrowUp';
+      }
+    },
+    [],
+  );
 
+  const handleMove = useCallback(
+    (direction: Directions) => {
       if (!directions.includes(direction)) return;
 
       const isVerticalMove =
@@ -75,11 +84,15 @@ export function useBoard() {
         const { newLine, scoreGained } = slideResult;
 
         totalScoreGained += scoreGained;
+
         return newLine;
       });
 
-      const isBoardChanged = orientedBoard.some((row, i) =>
-        row.some((tile, j) => tile.value !== updatedBoard[i][j].value),
+      const isBoardChanged = orientedBoard.some((row, rowIndex) =>
+        row.some(
+          (tile, colIndex) =>
+            tile.value !== updatedBoard[rowIndex][colIndex].value,
+        ),
       );
 
       if (!isBoardChanged) return;
@@ -115,13 +128,57 @@ export function useBoard() {
     [board, score, highScore],
   );
 
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      const direction = event.key as Directions;
+      handleMove(direction);
+    },
+    [handleMove],
+  );
+
+  const touchStartX = useRef<number>(0);
+  const touchStartY = useRef<number>(0);
+
+  const handleTouchStart = useCallback((event: TouchEvent) => {
+    event.preventDefault();
+
+    touchStartX.current = event.touches[0].clientX;
+    touchStartY.current = event.touches[0].clientY;
+  }, []);
+
+  const handleTouchEnd = useCallback(
+    (event: TouchEvent) => {
+      if (!touchStartX.current || !touchStartY.current) return;
+
+      event.preventDefault();
+
+      const touchEndX = event.changedTouches[0].clientX;
+      const touchEndY = event.changedTouches[0].clientY;
+
+      const deltaX = touchEndX - touchStartX.current;
+      const deltaY = touchEndY - touchStartY.current;
+
+      const absDeltaX = Math.abs(deltaX);
+      const absDeltaY = Math.abs(deltaY);
+
+      if (Math.max(absDeltaX, absDeltaY) < 30) return;
+
+      const direction = determineSwipeDirection(deltaX, deltaY);
+      handleMove(direction);
+
+      touchStartX.current = 0;
+      touchStartY.current = 0;
+    },
+    [determineSwipeDirection, handleMove],
+  );
+
   useEffect(() => {
-    window.addEventListener('keydown', handleMove);
+    window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      window.removeEventListener('keydown', handleMove);
+      window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [handleMove]);
+  }, [handleKeyDown]);
 
   return {
     board,
@@ -131,5 +188,7 @@ export function useBoard() {
     score,
     highScore,
     maxValue,
+    handleTouchStart,
+    handleTouchEnd,
   };
 }

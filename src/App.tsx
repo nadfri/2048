@@ -5,8 +5,17 @@ import Score from './components/Score/Score';
 import BtnAction from './components/BtnAction/BtnAction';
 
 function App() {
-  const { reload, board, backPrevBoard, canBack, score, highScore, maxValue } =
-    useBoard();
+  const {
+    reload,
+    board,
+    backPrevBoard,
+    canBack,
+    score,
+    highScore,
+    maxValue,
+    handleTouchStart,
+    handleTouchEnd,
+  } = useBoard();
 
   return (
     <div className="App">
@@ -14,7 +23,11 @@ function App() {
 
       <Score score={score} highScore={highScore} maxValue={maxValue} />
 
-      <Board board={board} />
+      <Board
+        board={board}
+        handleTouchStart={handleTouchStart}
+        handleTouchEnd={handleTouchEnd}
+      />
 
       <BtnAction
         reload={reload}
