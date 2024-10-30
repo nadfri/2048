@@ -32,12 +32,7 @@ export function useBoard() {
     setScore(0);
     setMaxValue(0);
     setCanBack(false);
-    saveInStorage({
-      board: newInitialBoard,
-      score: 0,
-      highScore,
-      maxValue: 0,
-    });
+    saveInStorage({ board: newInitialBoard, score: 0, highScore, maxValue: 0 });
   };
 
   const backPrevBoard = () => {
@@ -75,7 +70,11 @@ export function useBoard() {
       let totalScoreGained = 0;
 
       const updatedBoard = orientedBoard.map((line) => {
-        const { newLine, scoreGained } = slideLine(line, direction);
+        const slideResult = slideLine(line, direction);
+
+        const newLine = slideResult.line;
+        const scoreGained = slideResult.scoreGained;
+
         totalScoreGained += scoreGained;
         return newLine;
       });
