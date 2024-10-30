@@ -30,3 +30,10 @@
     rotate: 180deg;
   }
 }
+
+.btn-full{
+  width: 50px;
+  display: grid;
+  place-items: center;
+  color: var(--text-color);
+}
