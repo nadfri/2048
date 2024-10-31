@@ -41,13 +41,13 @@
     margin-right: auto;
     color: var(--grid-color);
     transition: color 0.2s;
-    gap: 2px;
+    gap: 7px;
 
     &:hover {
       color: white;
     }
 
-    .pseudo{
+    .pseudo {
       font-size: 10px;
     }
   }

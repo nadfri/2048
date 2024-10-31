@@ -2,8 +2,8 @@ export default function ScreenIcon() {
   return (
     <svg
       fill="currentColor"
-      height="26"
-      width="26"
+      height="30"
+      width="30"
       version="1.1"
       id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"
@@ -11,11 +11,6 @@ export default function ScreenIcon() {
       viewBox="0 0 512 512"
       xmlSpace="preserve"
     >
-      <g>
-        <g>
-          <path d="M0,0v512h512V0H0z M477.867,477.867H34.133V34.133h443.733V477.867z" />
-        </g>
-      </g>
       <g>
         <g>
           <polygon points="126.533,102.4 199.111,102.4 199.111,68.267 68.267,68.267 68.267,199.111 102.4,199.111 102.4,126.538 198.422,222.558 222.556,198.423" />

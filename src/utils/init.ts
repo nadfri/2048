@@ -1,7 +1,7 @@
 import { TileType } from '@/types/types';
 
 const LINES = 4;
-const PERCENT_OF_2 = 0.7;
+const PERCENT_OF_2 = 0.75;
 
 export const defaultTile = (): TileType => ({
   value: 0,

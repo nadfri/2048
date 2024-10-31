@@ -52,7 +52,8 @@ export default function BtnAction({ reload, backPrevBoard, canBack }: Props) {
       </button>
 
       <button className="btn-back" onClick={backPrevBoard} disabled={!canBack}>
-        <span className="arrow">↼</span> <span>BACK</span>
+        <span className="arrow">↼</span>
+        <span>BACK</span>
       </button>
     </div>
   );
