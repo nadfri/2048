@@ -3,6 +3,7 @@ import ReloadIcon from '../ReloadIcon/ReloadIcon';
 import './BtnAction.scss';
 import ScreenIcon from '../ScreenIcon/ScreenIcon';
 import ExitIcon from '../ExitIcon/ExitIcon';
+import GithubIcon from '../GithubIcon/GithubIcon';
 
 type Props = {
   reload: () => void;
@@ -31,6 +32,14 @@ export default function BtnAction({ reload, backPrevBoard, canBack }: Props) {
 
   return (
     <div className="BtnAction">
+      <a
+        className="git-link"
+        href="https://github.com/nadfri/2048"
+        target="_blank"
+      >
+        <GithubIcon />
+      </a>
+
       {!isIOS && (
         <button onClick={toggleFullscreen} className="btn-icon">
           {isFullscreen ? <ExitIcon /> : <ScreenIcon />}

@@ -31,7 +31,7 @@ You can play **2048** directly online via this link: [https://2048-nadfrijs.netl
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/2048.git
+   git clone https://github.com/nadfri/2048.git
    ```
 
 2. **Navigate to the project directory**

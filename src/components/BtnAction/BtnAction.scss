@@ -32,4 +32,16 @@
       rotate: 180deg;
     }
   }
+
+  .git-link {
+    display: grid;
+    place-self: center;
+    margin-right: auto;
+    color: var(--grid-color);
+    transition: color 0.2s;
+
+    &:hover {
+      color: white;
+    }
+  }
 }
