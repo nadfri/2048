@@ -3,6 +3,7 @@ import Board from './components/Board/Board';
 import { useBoard } from './hooks/useBoard';
 import Score from './components/Score/Score';
 import BtnAction from './components/BtnAction/BtnAction';
+import Title from './components/Title/Title';
 
 function App() {
   const {
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>{maxValue < 2048 ? '2048' : maxValue}</h1>
+      <Title maxValue={maxValue} />
 
       <Score score={score} highScore={highScore} maxValue={maxValue} />
 
@@ -28,7 +29,6 @@ function App() {
         reload={reload}
         backPrevBoard={backPrevBoard}
         canBack={canBack}
-        maxValue={maxValue}
       />
     </div>
   );

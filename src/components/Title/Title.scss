@@ -1,0 +1,15 @@
+.Title {
+  text-align: center;
+  font-size: 50px;
+  margin: 0;
+
+  .Tile {
+    aspect-ratio: initial;
+    background-color: gold;
+    border-radius: 4px;
+
+    .value {
+      font-size: 10px !important;
+    }
+  }
+}
