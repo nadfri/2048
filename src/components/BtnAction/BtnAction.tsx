@@ -38,6 +38,7 @@ export default function BtnAction({ reload, backPrevBoard, canBack }: Props) {
         target="_blank"
       >
         <GithubIcon />
+        <span className="pseudo">NADFRI JS</span>
       </a>
 
       {!isIOS && (

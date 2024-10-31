@@ -34,14 +34,21 @@
   }
 
   .git-link {
-    display: grid;
-    place-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     margin-right: auto;
     color: var(--grid-color);
     transition: color 0.2s;
+    gap: 2px;
 
     &:hover {
       color: white;
+    }
+
+    .pseudo{
+      font-size: 10px;
     }
   }
 }
