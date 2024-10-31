@@ -4,7 +4,10 @@ Welcome to **2048**, a replica of the famous puzzle game where the goal is to re
 
 You can play **2048** directly online via this link: [https://2048-nadfrijs.netlify.app/](https://2048-nadfrijs.netlify.app/)
 
-![Screenshot](https://2048-nadfrijs.netlify.app/screenshot.webp)
+<div align="center">
+  <img src="https://2048-nadfrijs.netlify.app/screenshot.webp" alt="Screenshot" width="300">
+</div>
+
 
 - **Keyboard Controls**: Use the arrow keys to move the tiles.
 - **Touch Gestures**: Compatible with mobile devices for intuitive movements.
