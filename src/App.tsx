@@ -4,6 +4,7 @@ import { useBoard } from './hooks/useBoard';
 import Score from './components/Score/Score';
 import BtnAction from './components/BtnAction/BtnAction';
 import Title from './components/Title/Title';
+import RotateDevice from './components/RotateDevice/RotateDevice';
 
 function App() {
   const {
@@ -30,6 +31,8 @@ function App() {
         backPrevBoard={backPrevBoard}
         canBack={canBack}
       />
+
+      <RotateDevice />
     </div>
   );
 }
