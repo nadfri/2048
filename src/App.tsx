@@ -5,6 +5,7 @@ import Score from './components/Score/Score';
 import BtnAction from './components/BtnAction/BtnAction';
 import Title from './components/Title/Title';
 import RotateDevice from './components/RotateDevice/RotateDevice';
+import ReloadPWA from './components/ReloadPWA/ReloadPWA';
 
 function App() {
   const {
@@ -33,6 +34,8 @@ function App() {
       />
 
       <RotateDevice />
+
+      <ReloadPWA />
     </div>
   );
 }

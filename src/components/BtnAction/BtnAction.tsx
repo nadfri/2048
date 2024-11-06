@@ -42,12 +42,22 @@ export default function BtnAction({ reload, backPrevBoard, canBack }: Props) {
       </a>
 
       {!isIOS && (
-        <button onClick={toggleFullscreen} className="btn-icon">
+        <button
+          onClick={toggleFullscreen}
+          className="btn-icon"
+          aria-label={
+            isFullscreen ? 'Exit from fullscreen' : 'Enter to fullscreen'
+          }
+        >
           {isFullscreen ? <ExitIcon /> : <ScreenIcon />}
         </button>
       )}
 
-      <button className="btn-icon btn-reload" onClick={reload}>
+      <button
+        className="btn-icon btn-reload"
+        onClick={reload}
+        aria-label="Reload Game"
+      >
         <ReloadIcon />
       </button>
 
