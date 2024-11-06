@@ -52,10 +52,10 @@ export default defineConfig({
       includeAssets: [
         'icons/favicon.ico',
         'icons/apple-touch-icon.png',
-        'icons/maskable-icon-512x512.png',
+        'icons/maskable-icon.png',
         'icons/pwa-192x192.png',
         'icons/pwa-512x512.png',
-        'screenshot.webp',
+        'screenshot.png',
         'screenshot2.webp',
       ],
       manifest: {
@@ -71,7 +71,11 @@ export default defineConfig({
         id: '/',
         orientation: 'portrait',
         icons: [
-          { src: 'icons/pwa-64x64.png', sizes: '64x64', type: 'image/png' },
+          {
+            src: 'icons/pwa-64x64.png',
+            sizes: '64x64',
+            type: 'image/png',
+          },
           {
             src: 'icons/pwa-192x192.png',
             sizes: '192x192',
@@ -83,10 +87,10 @@ export default defineConfig({
             type: 'image/png',
           },
           {
-            src: 'icons/maskable-icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
+            src: 'icons/maskable-icon.png',
             purpose: 'maskable',
+            type: 'image/png',
+            sizes: '512x512',
           },
           {
             src: 'icons/apple-touch-icon.png',
@@ -111,8 +115,8 @@ export default defineConfig({
         ],
         screenshots: [
           {
-            src: 'screenshot.webp',
-            sizes: '424x876',
+            src: 'screenshot.png',
+            sizes: '478x972',
             type: 'image/webp',
             platform: 'mobile',
             form_factor: 'narrow',
