@@ -6,8 +6,6 @@ import BtnAction from './components/BtnAction/BtnAction';
 import Title from './components/Title/Title';
 import RotateDevice from './components/RotateDevice/RotateDevice';
 import ReloadPWA from './components/PWA/ReloadPWA/ReloadPWA';
-import { useRef } from 'react';
-import useTouchMove from './hooks/useTouchMove';
 import InstallPWA from './components/PWA/InstallPWA/InstallPWA';
 
 function App() {
@@ -22,24 +20,19 @@ function App() {
     handleMove,
   } = useBoard();
 
-  const ref = useRef<HTMLDivElement>(null);
-  useTouchMove({ handleMove, ref });
-
   return (
     <div className="App">
       <Title maxValue={maxValue} />
 
       <Score score={score} highScore={highScore} maxValue={maxValue} />
 
-      <div className="touch-container" ref={ref}>
-        <Board board={board} />
+      <Board board={board} handleMove={handleMove} />
 
-        <BtnAction
-          reload={reload}
-          backPrevBoard={backPrevBoard}
-          canBack={canBack}
-        />
-      </div>
+      <BtnAction
+        reload={reload}
+        backPrevBoard={backPrevBoard}
+        canBack={canBack}
+      />
 
       <RotateDevice />
 
