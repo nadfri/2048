@@ -10,16 +10,16 @@ export default function InstallPWA() {
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
+    setIsVisible(true);
+
+    timeoutId = setTimeout(() => {
+      setIsVisible(false);
+    }, 5000);
+
     const handleBeforeInstallPrompt = (event: Event) => {
       const beforeInstallPromptEvent = event as BeforeInstallPromptEvent;
       beforeInstallPromptEvent.preventDefault();
       promptRef.current = beforeInstallPromptEvent;
-
-      setIsVisible(true);
-
-      timeoutId = setTimeout(() => {
-        setIsVisible(false);
-      }, 5000);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -33,7 +33,7 @@ export default function InstallPWA() {
         handleBeforeInstallPrompt,
       );
     };
-  }, []);
+  }, [isIOS]);
 
   const handleInstall = () => {
     if (promptRef.current) {
@@ -49,6 +49,7 @@ export default function InstallPWA() {
     <button
       className={`InstallPWA ${isVisible ? 'show' : ''}`}
       onClick={handleInstall}
+      aria-label="Install 2048 Game"
     >
       Click here to install 2048 👍
     </button>
