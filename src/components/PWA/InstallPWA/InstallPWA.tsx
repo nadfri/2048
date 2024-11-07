@@ -1,44 +1,49 @@
-import IOSshareIcon from '@/components/Icons/IOSshareIcon/IOSshareIcon';
 import './InstallPWA.scss';
+import IOSshareIcon from '@/components/Icons/IOSshareIcon/IOSshareIcon';
 import { useEffect, useRef, useState } from 'react';
+
+const DURATION = 3000;
 
 export default function InstallPWA() {
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
   const promptRef = useRef<BeforeInstallPromptEvent | null>(null);
+  const timeoutId = useRef<number>();
+
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+    /*iOS*/
+    if (isIOS) {
+      setIsVisible(true);
+      timeoutId.current = setTimeout(() => setIsVisible(false), DURATION);
 
-    setIsVisible(true);
+      return () => clearTimeout(timeoutId.current);
+    }
 
-    timeoutId = setTimeout(() => {
-      setIsVisible(false);
-    }, 3000);
-
+    /*Android*/
     const handleBeforeInstallPrompt = (event: Event) => {
       const beforeInstallPromptEvent = event as BeforeInstallPromptEvent;
       beforeInstallPromptEvent.preventDefault();
       promptRef.current = beforeInstallPromptEvent;
+
+      setIsVisible(true);
+      timeoutId.current = setTimeout(() => setIsVisible(false), DURATION);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
     return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
       window.removeEventListener(
         'beforeinstallprompt',
         handleBeforeInstallPrompt,
       );
+      if (timeoutId.current) clearTimeout(timeoutId.current);
     };
-  }, []);
+  }, [isIOS]);
 
   const handleInstall = () => {
-    if (promptRef.current) {
-      promptRef.current.prompt();
-    }
+    promptRef.current?.prompt();
   };
 
   return isIOS ? (
