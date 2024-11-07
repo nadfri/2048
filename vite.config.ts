@@ -55,6 +55,7 @@ export default defineConfig({
         'icons/maskable-icon.png',
         'icons/pwa-192x192.png',
         'icons/pwa-512x512.png',
+        'icons/rotate.svg',
         'screenshot.png',
         'screenshot2.webp',
       ],
