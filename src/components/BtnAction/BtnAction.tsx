@@ -53,16 +53,11 @@ export default function BtnAction({ reload, backPrevBoard, canBack }: Props) {
         </button>
       )}
 
-      <button
-        className="btn-icon btn-reload"
-        onClick={reload}
-        aria-label="Reload Game"
-      >
-        <ReloadIcon />
+      <button className="btn-icon" onClick={reload} aria-label="Reload Game">
+        <ReloadIcon className="ReloadIcon" />
       </button>
 
       <button className="btn-back" onClick={backPrevBoard} disabled={!canBack}>
-        <span className="arrow">↼</span>
         <span>BACK</span>
       </button>
     </div>

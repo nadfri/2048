@@ -1,6 +1,8 @@
-export default function ReloadIcon() {
+export default function ReloadIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
+      {...props}
+      className={props.className || ''}
       aria-hidden="true"
       width="32"
       height="32"

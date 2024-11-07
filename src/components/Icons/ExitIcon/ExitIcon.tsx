@@ -1,6 +1,9 @@
-export default function ExitIcon() {
+export default function ExitIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
+      {...props}
+      className={props.className || ''}
+      aria-hidden="true"
       width="30"
       height="30"
       viewBox="0 0 20 20"

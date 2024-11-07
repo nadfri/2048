@@ -1,6 +1,9 @@
-export default function ScreenIcon() {
+export default function ScreenIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
+      {...props}
+      className={props.className || ''}
+      aria-hidden="true"
       fill="currentColor"
       height="30"
       width="30"

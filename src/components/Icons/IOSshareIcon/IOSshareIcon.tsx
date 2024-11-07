@@ -1,6 +1,9 @@
-export default function IOSshareIcon() {
+export default function IOSshareIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
+      {...props}
+      className={props.className || ''}
+      aria-hidden="true"
       width="20"
       height="20"
       viewBox="0 0 48 48"

@@ -1,14 +1,14 @@
-import './ReloadIcon.scss';
-
-export default function ReloadIcon() {
+export default function ReloadIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
+      {...props}
+      className={props.className || ''}
+      aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="ReloadIcon"
     >
       <path
         strokeLinecap="round"

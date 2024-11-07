@@ -12,19 +12,19 @@
 
     padding: 5px 10px;
     font-size: 16px;
-
-    .arrow {
-      font-size: 2rem;
-    }
   }
 
   .btn-icon {
     width: 52px;
     display: grid;
     place-items: center;
-  }
 
-  .btn-reload {
+    .ReloadIcon {
+      width: 30px;
+      height: 30px;
+      transition: rotate 0.2s;
+    }
+
     &:active .ReloadIcon {
       rotate: 180deg;
     }

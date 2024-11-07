@@ -14,7 +14,7 @@ export default function InstallPWA() {
 
     timeoutId = setTimeout(() => {
       setIsVisible(false);
-    }, 5000);
+    }, 4000);
 
     const handleBeforeInstallPrompt = (event: Event) => {
       const beforeInstallPromptEvent = event as BeforeInstallPromptEvent;
