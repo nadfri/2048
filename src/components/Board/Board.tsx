@@ -17,11 +17,13 @@ export default function Board({ board, handleMove }: Props) {
   useTouchMove({ handleMove, ref });
 
   return (
-    <div className="Board fade-in" style={style} ref={ref}>
-      {board.flat().map((tile, index: number) => {
-        const key = `${tile.value}-${tile.isNew}-${tile.isMerged}-${tile.direction}-${index}`;
-        return <Tile tile={tile} key={key} />;
-      })}
+    <div className="Board fade-in" ref={ref}>
+      <div className="grid" style={style} ref={ref}>
+        {board.flat().map((tile, index: number) => {
+          const key = `${tile.value}-${tile.isNew}-${tile.isMerged}-${tile.direction}-${index}`;
+          return <Tile tile={tile} key={key} />;
+        })}
+      </div>
     </div>
   );
 }
