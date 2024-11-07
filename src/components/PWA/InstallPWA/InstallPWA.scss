@@ -29,4 +29,8 @@
       color: var(--bg-color);
     }
   }
+
+  @media all and (display-mode: standalone) {
+    display: none;
+  }
 }

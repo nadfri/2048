@@ -14,7 +14,7 @@
   }
 
   .btn-icon {
-    width: 52px;
+    width: 45px;
     display: grid;
     place-items: center;
 
@@ -37,7 +37,6 @@
     margin-right: auto;
     color: var(--grid-color);
     transition: color 0.2s;
-    gap: 7px;
 
     &:hover {
       color: white;

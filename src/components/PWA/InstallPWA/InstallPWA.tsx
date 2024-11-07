@@ -14,7 +14,7 @@ export default function InstallPWA() {
 
     timeoutId = setTimeout(() => {
       setIsVisible(false);
-    }, 4000);
+    }, 3000);
 
     const handleBeforeInstallPrompt = (event: Event) => {
       const beforeInstallPromptEvent = event as BeforeInstallPromptEvent;
@@ -33,7 +33,7 @@ export default function InstallPWA() {
         handleBeforeInstallPrompt,
       );
     };
-  }, [isIOS]);
+  }, []);
 
   const handleInstall = () => {
     if (promptRef.current) {
