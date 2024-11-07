@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import ReloadIcon from '../ReloadIcon/ReloadIcon';
+import ReloadIcon from '../Icons/ReloadIcon/ReloadIcon';
 import './BtnAction.scss';
-import ScreenIcon from '../ScreenIcon/ScreenIcon';
-import ExitIcon from '../ExitIcon/ExitIcon';
-import GithubIcon from '../GithubIcon/GithubIcon';
+import ScreenIcon from '../Icons/ScreenIcon/ScreenIcon';
+import ExitIcon from '../Icons/ExitIcon/ExitIcon';
+import GithubIcon from '../Icons/GithubIcon/GithubIcon';
 
 type Props = {
   reload: () => void;

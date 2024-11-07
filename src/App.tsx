@@ -5,9 +5,10 @@ import Score from './components/Score/Score';
 import BtnAction from './components/BtnAction/BtnAction';
 import Title from './components/Title/Title';
 import RotateDevice from './components/RotateDevice/RotateDevice';
-import ReloadPWA from './components/ReloadPWA/ReloadPWA';
+import ReloadPWA from './components/PWA/ReloadPWA/ReloadPWA';
 import { useRef } from 'react';
 import useTouchMove from './hooks/useTouchMove';
+import InstallPWA from './components/PWA/InstallPWA/InstallPWA';
 
 function App() {
   const {
@@ -43,6 +44,7 @@ function App() {
       <RotateDevice />
 
       <ReloadPWA />
+      <InstallPWA />
     </div>
   );
 }

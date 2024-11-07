@@ -1,0 +1,32 @@
+.InstallPWA {
+  height: 50px;
+  background-color: var(--tile-2-color);
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+
+  transform: translateY(100%);
+  transition: transform 0.5s;
+
+  z-index: 1;
+
+  &.show {
+    transform: translateY(0%);
+  }
+
+  &.ios {
+    font-size: 14px;
+    text-align: center;
+
+    svg {
+      position: relative;
+      top: 3px;
+      color: var(--bg-color);
+    }
+  }
+}
