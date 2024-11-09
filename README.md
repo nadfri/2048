@@ -18,8 +18,10 @@ You can play **2048** directly online via this link: [https://2048-nadfrijs.netl
 - [React](https://reactjs.org/) - JavaScript library for building user interfaces.
 - [TypeScript](https://www.typescriptlang.org/) - JavaScript superset that adds static typing.
 - [Vite](https://vitejs.dev/) - Fast build tool for modern front-end projects.
+- [Zustand](https://github.com/pmndrs/zustand) - Lightweight state management with persist middleware for local storage.
 - [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/) - Tools for code linting and formatting.
 - [Sass](https://sass-lang.com/) - CSS preprocessor for more organized styling.
+
 
 ## Installation
 
