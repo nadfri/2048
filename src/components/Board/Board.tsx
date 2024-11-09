@@ -3,18 +3,14 @@ import { useRef } from 'react';
 import Tile from '../Tile/Tile';
 import { LINES } from '@/utils/init';
 import useTouchMove from '@/hooks/useTouchMove';
-import { Directions, TileType } from '@/types/types';
+import { useStoreBoard } from '@/store/useStoreBoard';
 
-type Props = {
-  board: TileType[][];
-  handleMove: (direction: Directions) => void;
-};
-
-export default function Board({ board, handleMove }: Props) {
+export default function Board() {
+  const { board } = useStoreBoard();
   const ref = useRef<HTMLDivElement>(null);
   const style = { gridTemplateColumns: `repeat(${LINES}, 1fr)` };
 
-  useTouchMove({ handleMove, ref });
+  useTouchMove(ref);
 
   return (
     <div className="Board fade-in" ref={ref}>

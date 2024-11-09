@@ -1,13 +1,10 @@
-import { Directions } from '@/types/types';
+import { useStoreBoard } from '@/store/useStoreBoard';
 import { determineSwipeDirection } from '@/utils/utils';
 import { useRef, useCallback, useEffect } from 'react';
 
-type Props = {
-  handleMove: (direction: Directions) => void;
-  ref: React.RefObject<HTMLDivElement>;
-};
+export default function useTouchMove(ref: React.RefObject<HTMLDivElement>) {
+  const { handleMove } = useStoreBoard();
 
-export default function useTouchMove({ handleMove, ref }: Props) {
   const touchStartX = useRef<number>(0);
   const touchStartY = useRef<number>(0);
 
