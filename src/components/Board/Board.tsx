@@ -1,16 +1,13 @@
 import './Board.scss';
-import { useRef } from 'react';
 import Tile from '../Tile/Tile';
 import { LINES } from '@/utils/init';
-import useTouchMove from '@/hooks/useTouchMove';
 import { useStoreBoard } from '@/store/useStoreBoard';
+import { forwardRef } from 'react';
 
-export default function Board() {
+const Board = forwardRef<HTMLDivElement>((_, ref) => {
   const { board } = useStoreBoard();
-  const ref = useRef<HTMLDivElement>(null);
-  const style = { gridTemplateColumns: `repeat(${LINES}, 1fr)` };
 
-  useTouchMove(ref);
+  const style = { gridTemplateColumns: `repeat(${LINES}, 1fr)` };
 
   return (
     <div className="Board fade-in" ref={ref}>
@@ -22,4 +19,6 @@ export default function Board() {
       </div>
     </div>
   );
-}
+});
+
+export default Board;
