@@ -9,7 +9,10 @@ export type TileType = {
 
 export type StorageType = {
   board: TileType[][] | null;
+  prevBoard: TileType[][] | null;
+  canBack: boolean;
   score: number;
+  prevScore: number;
   highScore: number;
   maxValue: number;
 } | null;
@@ -34,11 +37,7 @@ export type StoreStateType = {
   /* Actions */
   reload: () => void;
   backPrevBoard: () => void;
-  updateMove: (
-    finalBoard: TileType[][],
-    newScore: number,
-    newHighScore: number,
-    newMaxValue: number,
-  ) => void;
+  updateMove: (finalBoard: TileType[][]) => void;
   handleMove: (direction: Directions) => void;
+  updateScore: (scoreGained: number) => void;
 };

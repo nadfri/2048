@@ -1,5 +1,6 @@
 import { defaultTile, LINES, PERCENT_OF_2 } from './init';
 import { Directions, TileType } from '@/types/types';
+import { useStoreBoard } from '@/store/useStoreBoard';
 
 export const directions: Directions[] = [
   'ArrowRight',
@@ -8,21 +9,13 @@ export const directions: Directions[] = [
   'ArrowUp',
 ];
 
-type SlideLineResult = {
-  newLine: TileType[];
-  scoreGained: number;
-};
-
-export function slideLine(
-  line: TileType[],
-  direction: Directions,
-): SlideLineResult {
+export function slideLine(line: TileType[], direction: Directions): TileType[] {
   /*#1 Remove zeros from the line*/
   const lineWithoutZero = line.filter((tile) => tile.value !== 0);
-  if (lineWithoutZero.length === 0) return { newLine: line, scoreGained: 0 };
+  if (lineWithoutZero.length === 0) return line;
 
   /*#2 Merge tiles of the line */
-  const { mergedLine, scoreGained } = mergeLineValues(lineWithoutZero);
+  const mergedLine = mergeLineValues(lineWithoutZero);
 
   /*#3 Add zeros to the line */
   const zeros: TileType[] = Array(LINES - mergedLine.length).fill(
@@ -40,21 +33,16 @@ export function slideLine(
     (tile, index) => tile.value !== newLine[index].value,
   );
 
-  if (!isLineChanged) return { newLine: line, scoreGained: 0 };
+  if (!isLineChanged) return line;
 
   /*#5 Add slide direction to the line for animation*/
   newLine = addSlideDirectionToLine(newLine, line, direction);
 
-  return { newLine, scoreGained };
+  return newLine;
 }
 
-type MergeLineResult = {
-  mergedLine: TileType[];
-  scoreGained: number;
-};
-
-function mergeLineValues(line: TileType[]): MergeLineResult {
-  if (line.length < 2) return { mergedLine: line, scoreGained: 0 };
+function mergeLineValues(line: TileType[]): TileType[] {
+  if (line.length < 2) return line;
 
   const deepCopyLine = line.map((tile) => ({ ...tile }));
   let scoreGained = 0;
@@ -73,9 +61,11 @@ function mergeLineValues(line: TileType[]): MergeLineResult {
     }
   }
 
+  useStoreBoard.getState().updateScore(scoreGained);
+
   const mergedLine = deepCopyLine.filter((tile) => tile.value !== 0);
 
-  return { mergedLine, scoreGained };
+  return mergedLine;
 }
 
 export function addSlideDirectionToLine(

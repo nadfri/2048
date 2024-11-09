@@ -2,21 +2,21 @@ import { create } from 'zustand';
 import { newBoard } from '@/utils/init';
 import { getFromStorage, saveInStorage } from '@/utils/storage';
 import {
-  directions,
   resetTileStates,
   transposeArray,
   slideLine,
   getMaxValue,
   addNewNumberToBoard,
+  directions,
 } from '@/utils/utils';
 import { StoreStateType } from '@/types/types';
 
 export const useStoreBoard = create<StoreStateType>((set, get) => ({
   board: getFromStorage()?.board || newBoard(),
-  prevBoard: null,
-  canBack: false,
+  prevBoard: getFromStorage()?.prevBoard || null,
+  canBack: getFromStorage()?.canBack || false,
   score: getFromStorage()?.score || 0,
-  prevScore: getFromStorage()?.score || 0,
+  prevScore: getFromStorage()?.prevScore || 0,
   highScore: getFromStorage()?.highScore || 0,
   maxValue: getFromStorage()?.maxValue || 0,
 
@@ -33,9 +33,13 @@ export const useStoreBoard = create<StoreStateType>((set, get) => ({
   reload: () => {
     const newInitialBoard = newBoard();
     set({ board: newInitialBoard, score: 0, maxValue: 0, canBack: false });
+
     saveInStorage({
       board: newInitialBoard,
+      prevBoard: null,
+      canBack: false,
       score: 0,
+      prevScore: 0,
       highScore: 0,
       maxValue: 0,
     });
@@ -44,38 +48,69 @@ export const useStoreBoard = create<StoreStateType>((set, get) => ({
   backPrevBoard: () => {
     set((state) => {
       if (state.prevBoard) {
+        saveInStorage({
+          prevBoard: null,
+          board: state.prevBoard,
+          canBack: false,
+          score: state.prevScore,
+          prevScore: 0,
+          highScore: state.highScore,
+          maxValue: getMaxValue(state.prevBoard),
+        });
+
         return {
+          prevBoard: null,
           board: state.prevBoard,
           score: state.prevScore,
           canBack: false,
-          maxValue: state.maxValue,
+          maxValue: getMaxValue(state.prevBoard),
         };
       }
       return {};
     });
   },
 
-  updateMove: (finalBoard, newScore, newHighScore, newMaxValue) => {
-    set((state) => ({
-      prevBoard: state.board,
-      board: finalBoard,
-      canBack: true,
-      prevScore: state.score,
-      score: newScore,
-      highScore: newHighScore,
-      maxValue: newMaxValue,
-    }));
+  updateMove: (finalBoard) => {
+    set((state) => {
+      saveInStorage({
+        prevBoard: state.board,
+        board: finalBoard,
+        canBack: true,
+        prevScore: state.prevScore,
+        score: state.score,
+        highScore: state.highScore,
+        maxValue: getMaxValue(finalBoard),
+      });
 
-    saveInStorage({
-      board: finalBoard,
-      score: newScore,
-      highScore: newHighScore,
-      maxValue: newMaxValue,
+      return {
+        prevBoard: state.board,
+        board: finalBoard,
+        canBack: true,
+        score: state.score,
+        highScore: state.highScore,
+        maxValue: getMaxValue(finalBoard),
+      };
     });
   },
 
+  updateScore: (scoreGained: number) =>
+    set((state) => {
+      const newPrevScore = state.score;
+      const newScore = state.score + scoreGained;
+
+      const newHighScore =
+        newScore > state.highScore ? newScore : state.highScore;
+
+      return {
+        score: newScore,
+        prevScore: newPrevScore,
+        highScore: newHighScore,
+      };
+    }),
+
   handleMove: (direction) => {
-    const { board, score, highScore } = get();
+    const { board, updateMove } = get();
+
     if (!directions.includes(direction)) return;
 
     const isVerticalMove = direction === 'ArrowDown' || direction === 'ArrowUp';
@@ -88,14 +123,10 @@ export const useStoreBoard = create<StoreStateType>((set, get) => ({
       ? transposeArray(resetedBoard)
       : resetedBoard;
 
-    /***#3 Update Board after slide move***/
-    let totalScoreGained = 0;
-
-    const updatedBoard = orientedBoard.map((line) => {
-      const { newLine, scoreGained } = slideLine(line, direction);
-      totalScoreGained += scoreGained;
-      return newLine;
-    });
+    /***#3 Update Board and score after slide move***/
+    const updatedBoard = orientedBoard.map((line) =>
+      slideLine(line, direction),
+    );
 
     const isBoardChanged = orientedBoard.some((row, rowIndex) =>
       row.some(
@@ -106,18 +137,13 @@ export const useStoreBoard = create<StoreStateType>((set, get) => ({
 
     if (!isBoardChanged) return;
 
-    /***#4 Update Score***/
-    const newScore = score + totalScoreGained;
-    const newMaxValue = getMaxValue(updatedBoard);
-    const newHighScore = newScore > highScore ? newScore : highScore;
-
-    /***#5 Add new number to the board if has changed***/
+    /***#4 Add a new number***/
     const boardWithNewNumber = addNewNumberToBoard(updatedBoard);
     const finalBoard = isVerticalMove
       ? transposeArray(boardWithNewNumber)
       : boardWithNewNumber;
 
-    /***#6 Set the new state***/
-    get().updateMove(finalBoard, newScore, newHighScore, newMaxValue);
+    /***#5 Update State***/
+    updateMove(finalBoard);
   },
 }));
