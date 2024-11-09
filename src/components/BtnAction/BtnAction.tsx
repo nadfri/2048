@@ -4,14 +4,10 @@ import './BtnAction.scss';
 import ScreenIcon from '../Icons/ScreenIcon/ScreenIcon';
 import ExitIcon from '../Icons/ExitIcon/ExitIcon';
 import GithubIcon from '../Icons/GithubIcon/GithubIcon';
+import { useStoreBoard } from '@/store/useStoreBoard';
 
-type Props = {
-  reload: () => void;
-  backPrevBoard: () => void;
-  canBack: boolean;
-};
-
-export default function BtnAction({ reload, backPrevBoard, canBack }: Props) {
+export default function BtnAction() {
+  const { reload, backPrevBoard, canBack } = useStoreBoard();
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);

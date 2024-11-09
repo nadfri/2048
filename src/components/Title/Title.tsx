@@ -1,7 +1,10 @@
+import { useStoreBoard } from '@/store/useStoreBoard';
 import Tile from '../Tile/Tile';
 import './Title.scss';
 
-export default function Title({ maxValue }: { maxValue: number }) {
+export default function Title() {
+  const { maxValue } = useStoreBoard();
+
   const tile = {
     value: maxValue,
     isNew: false,

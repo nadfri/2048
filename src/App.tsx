@@ -1,38 +1,25 @@
 import './App.scss';
 import Board from './components/Board/Board';
-import { useBoard } from './hooks/useBoard';
 import Score from './components/Score/Score';
 import BtnAction from './components/BtnAction/BtnAction';
 import Title from './components/Title/Title';
 import RotateDevice from './components/RotateDevice/RotateDevice';
 import ReloadPWA from './components/PWA/ReloadPWA/ReloadPWA';
 import InstallPWA from './components/PWA/InstallPWA/InstallPWA';
+import { useKeyMove } from './hooks/useKeyMove';
 
 function App() {
-  const {
-    reload,
-    board,
-    backPrevBoard,
-    canBack,
-    score,
-    highScore,
-    maxValue,
-    handleMove,
-  } = useBoard();
+  useKeyMove();
 
   return (
     <div className="App">
-      <Title maxValue={maxValue} />
+      <Title />
 
-      <Score score={score} highScore={highScore} maxValue={maxValue} />
+      <Score />
 
-      <Board board={board} handleMove={handleMove} />
+      <Board />
 
-      <BtnAction
-        reload={reload}
-        backPrevBoard={backPrevBoard}
-        canBack={canBack}
-      />
+      <BtnAction />
 
       <RotateDevice />
 

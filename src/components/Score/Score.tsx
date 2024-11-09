@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
 import './Score.scss';
+import { useStoreBoard } from '@/store/useStoreBoard';
 
-type Props = {
-  score: number;
-  highScore: number;
-  maxValue: number;
-};
+export default function Score() {
+  const { score, highScore, maxValue } = useStoreBoard();
 
-export default function Score({ score, highScore, maxValue }: Props) {
   useEffect(() => {
     document.title = `2048 | ${maxValue > 2048 ? maxValue + ' ✪' : maxValue}`;
 
