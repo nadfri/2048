@@ -5,9 +5,9 @@ Welcome to **2048**, a replica of the famous puzzle game where the goal is to re
 You can play **2048** directly online via this link: [https://2048-nadfrijs.netlify.app/](https://2048-nadfrijs.netlify.app/)
 
 <div align="center">
-  <img src="https://2048-nadfrijs.netlify.app/screenshot.webp" alt="Screenshot" width="300">
+  <img src="https://2048-nadfrijs.netlify.app/screenshot.png" alt="Screenshot" width="300">
+  <img src="https://2048-nadfrijs.netlify.app/screenshot3.png" alt="Screenshot" width="300">
 </div>
-
 
 - **Keyboard Controls**: Use the arrow keys to move the tiles.
 - **Touch Gestures**: Compatible with mobile devices for intuitive movements.
@@ -21,7 +21,6 @@ You can play **2048** directly online via this link: [https://2048-nadfrijs.netl
 - [Zustand](https://github.com/pmndrs/zustand) - Lightweight state management with persist middleware for local storage.
 - [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/) - Tools for code linting and formatting.
 - [Sass](https://sass-lang.com/) - CSS preprocessor for more organized styling.
-
 
 ## Installation
 
