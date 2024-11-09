@@ -5,8 +5,8 @@ Welcome to **2048**, a replica of the famous puzzle game where the goal is to re
 You can play **2048** directly online via this link: [https://2048-nadfrijs.netlify.app/](https://2048-nadfrijs.netlify.app/)
 
 <div align="center">
-  <img src="https://2048-nadfrijs.netlify.app/screenshot.png" alt="Screenshot" height="300">
-  <img src="https://2048-nadfrijs.netlify.app/screenshot3.png" alt="Screenshot" height="300">
+  <img src="https://2048-nadfrijs.netlify.app/screenshot.png" alt="Screenshot" height="500">
+  <img src="https://2048-nadfrijs.netlify.app/screenshot3.png" alt="Screenshot" height="500">
 </div>
 
 ## Key Features
