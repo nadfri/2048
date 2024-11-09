@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { Directions, TileType } from '@/types/types';
 import { newBoard } from '@/utils/init';
 import { getFromStorage, saveInStorage } from '@/utils/storage';
 import {
@@ -10,36 +9,9 @@ import {
   getMaxValue,
   addNewNumberToBoard,
 } from '@/utils/utils';
+import { StoreStateType } from '@/types/types';
 
-type StoreState = {
-  board: TileType[][];
-  prevBoard: TileType[][] | null;
-  canBack: boolean;
-  score: number;
-  prevScore: number;
-  highScore: number;
-  maxValue: number;
-  /* Setters */
-  setBoard: (board: TileType[][]) => void;
-  setPrevBoard: (prevBoard: TileType[][] | null) => void;
-  setCanBack: (canBack: boolean) => void;
-  setScore: (score: number) => void;
-  setPrevScore: (prevScore: number) => void;
-  setHighScore: (highScore: number) => void;
-  setMaxValue: (maxValue: number) => void;
-  /* Actions */
-  reload: () => void;
-  backPrevBoard: () => void;
-  updateMove: (
-    finalBoard: TileType[][],
-    newScore: number,
-    newHighScore: number,
-    newMaxValue: number,
-  ) => void;
-  handleMove: (direction: Directions) => void;
-};
-
-export const useStoreBoard = create<StoreState>((set, get) => ({
+export const useStoreBoard = create<StoreStateType>((set, get) => ({
   board: getFromStorage()?.board || newBoard(),
   prevBoard: null,
   canBack: false,
@@ -108,15 +80,15 @@ export const useStoreBoard = create<StoreState>((set, get) => ({
 
     const isVerticalMove = direction === 'ArrowDown' || direction === 'ArrowUp';
 
-    // Réinitialiser les états des tuiles
+    /***#1 Reset the tile states***/
     const resetedBoard = resetTileStates(board);
 
-    // Changer l'orientation pour un mouvement vertical
+    /***#2 Change Orientation for Vertical move***/
     const orientedBoard = isVerticalMove
       ? transposeArray(resetedBoard)
       : resetedBoard;
 
-    // Mettre à jour le tableau après le glissement
+    /***#3 Update Board after slide move***/
     let totalScoreGained = 0;
 
     const updatedBoard = orientedBoard.map((line) => {
@@ -134,18 +106,18 @@ export const useStoreBoard = create<StoreState>((set, get) => ({
 
     if (!isBoardChanged) return;
 
-    // Mettre à jour le score
+    /***#4 Update Score***/
     const newScore = score + totalScoreGained;
     const newMaxValue = getMaxValue(updatedBoard);
     const newHighScore = newScore > highScore ? newScore : highScore;
 
-    // Ajouter un nouveau numéro au tableau si modifié
+    /***#5 Add new number to the board if has changed***/
     const boardWithNewNumber = addNewNumberToBoard(updatedBoard);
     const finalBoard = isVerticalMove
       ? transposeArray(boardWithNewNumber)
       : boardWithNewNumber;
 
-    // Mettre à jour l'état
+    /***#6 Set the new state***/
     get().updateMove(finalBoard, newScore, newHighScore, newMaxValue);
   },
 }));
