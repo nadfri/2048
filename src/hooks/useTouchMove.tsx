@@ -2,7 +2,7 @@ import { useStoreBoard } from '@/store/useStoreBoard';
 import { determineSwipeDirection } from '@/utils/utils';
 import { useRef, useCallback, useEffect } from 'react';
 
-export default function useTouchMove(ref: React.RefObject<HTMLDivElement>) {
+export function useTouchMove(ref: React.RefObject<HTMLDivElement>) {
   const { handleMove } = useStoreBoard();
 
   const touchStartX = useRef<number>(0);

@@ -12,7 +12,7 @@ import {
 } from '@/utils/utils';
 
 const persistConfig: PersistOptions<StoreStateType> = {
-  name: '2048-NADFRIJS',
+  name: '2048-NADFRI-JS',
 };
 
 export const useStoreBoard = create<
