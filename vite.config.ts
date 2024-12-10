@@ -1,11 +1,15 @@
-import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
 
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      babel: {
+        plugins: [['babel-plugin-react-compiler', { target: '19' }]],
+      },
+    }),
     VitePWA({
       registerType: 'prompt',
       workbox: {
@@ -14,13 +18,13 @@ export default defineConfig({
         runtimeCaching: [
           {
             // Cache Google Fonts
-            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/,
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'google-fonts',
               expiration: {
                 maxEntries: 30,
-                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 an
+                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
               },
               cacheableResponse: {
                 statuses: [0, 200],
@@ -29,10 +33,10 @@ export default defineConfig({
           },
           {
             // Cache Google Fonts CSS
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/,
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
             handler: 'StaleWhileRevalidate',
             options: {
-              cacheName: 'google-fonts-stylesheets',
+              cacheName: 'google-fonts',
               expiration: {
                 maxEntries: 10,
                 maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
@@ -45,20 +49,10 @@ export default defineConfig({
         ],
       },
       devOptions: {
-        enabled: true,
+        enabled: false,
         type: 'module',
         navigateFallback: 'index.html',
       },
-      includeAssets: [
-        'icons/favicon.ico',
-        'icons/apple-touch-icon.png',
-        'icons/maskable-icon.png',
-        'icons/pwa-192x192.png',
-        'icons/pwa-512x512.png',
-        'icons/rotate.svg',
-        'screenshot.png',
-        'screenshot2.webp',
-      ],
       manifest: {
         name: '2048 by NadfriJS',
         short_name: '2048',

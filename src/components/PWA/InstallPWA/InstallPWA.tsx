@@ -8,7 +8,7 @@ export default function InstallPWA() {
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   const promptRef = useRef<BeforeInstallPromptEvent | null>(null);
-  const timeoutId = useRef<number>();
+  const timeoutId = useRef<number>(0);
 
   const [isVisible, setIsVisible] = useState(false);
 

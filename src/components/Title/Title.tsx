@@ -17,7 +17,10 @@ export default function Title() {
       <span className="title-2048">{maxValue < 2048 ? '2048' : maxValue}</span>
 
       {maxValue > 2 ? (
-        <Tile tile={tile} />
+        <>
+          <Tile tile={tile} />
+          <span style={{ fontSize: '10px' }}>{Date.now()}</span>
+        </>
       ) : (
         <div className="place-holder"></div>
       )}

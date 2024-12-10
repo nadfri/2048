@@ -2,9 +2,12 @@ import './Board.scss';
 import Tile from '../Tile/Tile';
 import { LINES } from '@/utils/init';
 import { useStoreBoard } from '@/store/useStoreBoard';
-import { forwardRef } from 'react';
 
-const Board = forwardRef<HTMLDivElement>((_, ref) => {
+export default function Board({
+  ref,
+}: {
+  ref: React.RefObject<HTMLDivElement | null>;
+}) {
   const { board } = useStoreBoard();
 
   const style = { gridTemplateColumns: `repeat(${LINES}, 1fr)` };
@@ -19,6 +22,4 @@ const Board = forwardRef<HTMLDivElement>((_, ref) => {
       </div>
     </div>
   );
-});
-
-export default Board;
+}
